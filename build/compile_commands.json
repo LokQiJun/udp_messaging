@@ -1,32 +1,38 @@
 [
 {
   "directory": "/Users/daozhengchang/Documents/DSO/udp_messaging/build",
-  "command": "/usr/bin/clang++  -I/Users/daozhengchang/Documents/DSO/udp_messaging/include -I/opt/homebrew/include -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/server_client.dir/src/main.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp",
+  "command": "g++  -I/opt/homebrew/include -I/Users/daozhengchang/Documents/DSO/udp_messaging/include  -std=c++11 -stdlib=libc++ -g -std=gnu++14 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/server_client.dir/src/main.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp",
   "file": "/Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp",
   "output": "CMakeFiles/server_client.dir/src/main.cpp.o"
 },
 {
   "directory": "/Users/daozhengchang/Documents/DSO/udp_messaging/build/src",
-  "command": "/usr/bin/clang++  -I/Users/daozhengchang/Documents/DSO/udp_messaging/include -I/opt/homebrew/include -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/entities/Client.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Client.cpp",
-  "file": "/Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Client.cpp",
-  "output": "src/CMakeFiles/src.dir/entities/Client.cpp.o"
-},
-{
-  "directory": "/Users/daozhengchang/Documents/DSO/udp_messaging/build/src",
-  "command": "/usr/bin/clang++  -I/Users/daozhengchang/Documents/DSO/udp_messaging/include -I/opt/homebrew/include -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/entities/Entity.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Entity.cpp",
+  "command": "g++  -I/opt/homebrew/include -I/Users/daozhengchang/Documents/DSO/udp_messaging/include  -std=c++11 -stdlib=libc++ -g -std=gnu++14 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/entities/Entity.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Entity.cpp",
   "file": "/Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Entity.cpp",
   "output": "src/CMakeFiles/src.dir/entities/Entity.cpp.o"
 },
 {
   "directory": "/Users/daozhengchang/Documents/DSO/udp_messaging/build/src",
-  "command": "/usr/bin/clang++  -I/Users/daozhengchang/Documents/DSO/udp_messaging/include -I/opt/homebrew/include -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/entities/Server.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Server.cpp",
+  "command": "g++  -I/opt/homebrew/include -I/Users/daozhengchang/Documents/DSO/udp_messaging/include  -std=c++11 -stdlib=libc++ -g -std=gnu++14 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/entities/Client.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Client.cpp",
+  "file": "/Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Client.cpp",
+  "output": "src/CMakeFiles/src.dir/entities/Client.cpp.o"
+},
+{
+  "directory": "/Users/daozhengchang/Documents/DSO/udp_messaging/build/src",
+  "command": "g++  -I/opt/homebrew/include -I/Users/daozhengchang/Documents/DSO/udp_messaging/include  -std=c++11 -stdlib=libc++ -g -std=gnu++14 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/entities/Server.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Server.cpp",
   "file": "/Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Server.cpp",
   "output": "src/CMakeFiles/src.dir/entities/Server.cpp.o"
 },
 {
   "directory": "/Users/daozhengchang/Documents/DSO/udp_messaging/build/src",
-  "command": "/usr/bin/clang++  -I/Users/daozhengchang/Documents/DSO/udp_messaging/include -I/opt/homebrew/include -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/utils.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/utils.cpp",
+  "command": "g++  -I/opt/homebrew/include -I/Users/daozhengchang/Documents/DSO/udp_messaging/include  -std=c++11 -stdlib=libc++ -g -std=gnu++14 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/utils.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/utils.cpp",
   "file": "/Users/daozhengchang/Documents/DSO/udp_messaging/src/utils.cpp",
   "output": "src/CMakeFiles/src.dir/utils.cpp.o"
+},
+{
+  "directory": "/Users/daozhengchang/Documents/DSO/udp_messaging/build/src",
+  "command": "g++  -I/opt/homebrew/include -I/Users/daozhengchang/Documents/DSO/udp_messaging/include  -std=c++11 -stdlib=libc++ -g -std=gnu++14 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/src.dir/main.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp",
+  "file": "/Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp",
+  "output": "src/CMakeFiles/src.dir/main.cpp.o"
 }
 ]

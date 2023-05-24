@@ -1,2 +1,2 @@
-/usr/bin/ar qc libsrc.a CMakeFiles/src.dir/entities/Client.cpp.o CMakeFiles/src.dir/entities/Entity.cpp.o CMakeFiles/src.dir/entities/Server.cpp.o CMakeFiles/src.dir/utils.cpp.o
+/usr/bin/ar qc libsrc.a CMakeFiles/src.dir/entities/Client.cpp.o CMakeFiles/src.dir/entities/Entity.cpp.o CMakeFiles/src.dir/entities/Server.cpp.o CMakeFiles/src.dir/utils.cpp.o CMakeFiles/src.dir/main.cpp.o
 /usr/bin/ranlib libsrc.a

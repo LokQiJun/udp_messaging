@@ -242,15 +242,6 @@ server_client_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 server_client_SOURCE_DIR:STATIC=/Users/daozhengchang/Documents/DSO/udp_messaging
 
-//Value Computed by CMake
-src_BINARY_DIR:STATIC=/Users/daozhengchang/Documents/DSO/udp_messaging/build/src
-
-//Value Computed by CMake
-src_IS_TOP_LEVEL:STATIC=OFF
-
-//Value Computed by CMake
-src_SOURCE_DIR:STATIC=/Users/daozhengchang/Documents/DSO/udp_messaging/src
-
 
 ########################
 # INTERNAL cache entries

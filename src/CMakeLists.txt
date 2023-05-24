@@ -5,4 +5,5 @@ add_library(src
     entities/Entity.cpp
     entities/Server.cpp
     utils.cpp
+    main.cpp
 )

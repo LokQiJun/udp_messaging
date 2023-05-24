@@ -7,7 +7,7 @@ std::string getCurrTime(){
 
     // Convert the current time to a string
     std::stringstream ss;
-    ss << std::put_time(std::localtime(&currentTime), "%Y%m%d_%H%M%S");
+    ss << std::put_time(std::localtime(&currentTime), "%Y-%m-%d_%H:%M:%S");
     std::string currentTimeStr = ss.str();
 
     return currentTimeStr;

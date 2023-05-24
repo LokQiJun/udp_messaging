@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Client.cpp" "src/CMakeFiles/src.dir/entities/Client.cpp.o" "gcc" "src/CMakeFiles/src.dir/entities/Client.cpp.o.d"
   "/Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Entity.cpp" "src/CMakeFiles/src.dir/entities/Entity.cpp.o" "gcc" "src/CMakeFiles/src.dir/entities/Entity.cpp.o.d"
   "/Users/daozhengchang/Documents/DSO/udp_messaging/src/entities/Server.cpp" "src/CMakeFiles/src.dir/entities/Server.cpp.o" "gcc" "src/CMakeFiles/src.dir/entities/Server.cpp.o.d"
+  "/Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp" "src/CMakeFiles/src.dir/main.cpp.o" "gcc" "src/CMakeFiles/src.dir/main.cpp.o.d"
   "/Users/daozhengchang/Documents/DSO/udp_messaging/src/utils.cpp" "src/CMakeFiles/src.dir/utils.cpp.o" "gcc" "src/CMakeFiles/src.dir/utils.cpp.o.d"
   )
 

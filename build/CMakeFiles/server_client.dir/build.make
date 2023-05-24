@@ -73,15 +73,15 @@ CMakeFiles/server_client.dir/src/main.cpp.o: CMakeFiles/server_client.dir/flags.
 CMakeFiles/server_client.dir/src/main.cpp.o: /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp
 CMakeFiles/server_client.dir/src/main.cpp.o: CMakeFiles/server_client.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daozhengchang/Documents/DSO/udp_messaging/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/server_client.dir/src/main.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server_client.dir/src/main.cpp.o -MF CMakeFiles/server_client.dir/src/main.cpp.o.d -o CMakeFiles/server_client.dir/src/main.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp
+	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server_client.dir/src/main.cpp.o -MF CMakeFiles/server_client.dir/src/main.cpp.o.d -o CMakeFiles/server_client.dir/src/main.cpp.o -c /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp
 
 CMakeFiles/server_client.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/server_client.dir/src/main.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp > CMakeFiles/server_client.dir/src/main.cpp.i
+	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp > CMakeFiles/server_client.dir/src/main.cpp.i
 
 CMakeFiles/server_client.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server_client.dir/src/main.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp -o CMakeFiles/server_client.dir/src/main.cpp.s
+	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/daozhengchang/Documents/DSO/udp_messaging/src/main.cpp -o CMakeFiles/server_client.dir/src/main.cpp.s
 
 # Object files for target server_client
 server_client_OBJECTS = \
@@ -92,6 +92,7 @@ server_client_EXTERNAL_OBJECTS =
 
 server_client: CMakeFiles/server_client.dir/src/main.cpp.o
 server_client: CMakeFiles/server_client.dir/build.make
+server_client: src/libsrc.a
 server_client: CMakeFiles/server_client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/daozhengchang/Documents/DSO/udp_messaging/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable server_client"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/server_client.dir/link.txt --verbose=$(VERBOSE)

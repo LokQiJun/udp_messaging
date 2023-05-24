@@ -60,7 +60,7 @@
 						"c++"
 					]
 				},
-				"path" : "/usr/bin/clang++",
+				"path" : "g++",
 				"version" : "14.0.3.14030022"
 			},
 			"language" : "CXX",

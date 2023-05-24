@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <boost/array.hpp>
 
 // Constructor
 Server::Server(std::string socketAddress, int socketPort) : Entity(socketAddress, socketPort) {
@@ -11,7 +12,6 @@ Server::Server(std::string socketAddress, int socketPort) : Entity(socketAddress
 
 // Destructor
 Server::~Server() {
-    Entity::closeSocket();
 }
 
 // Private Functions
@@ -22,19 +22,22 @@ void Server::initUDPSocket(){
 
 void Server::receive(){
     
+    // read bytes from socket
+    bool firstPacketRecieved = false;
+    int numPacks;
+    
+    boost::asio::ip::udp::endpoint clientEndpoint;
+    boost::array<char, 1024> recv_buffer;
+    std::size_t bytesReceived = socket.receive_from(boost::asio::buffer(recv_buffer), clientEndpoint);
+
     // declare output file for receive operation
     // #TODO: implement file type agnostic file declaration
-    std::ofstream outputFile = std::ofstream(getCurrTime()+".txt", std::ios::binary | std::ios::app);
+    std::ofstream outputFile = std::ofstream("storage/" + getCurrTime() + ".txt", std::ios::binary | std::ios::app);
     if(!outputFile.is_open()){
         std::cout << "Failed to write to output file" << std::endl;
         return;
     }
 
-    // read bytes from socket
-    
-    int numPacks;
-    boost::asio::ip::udp::endpoint clientEndpoint;
-    std::size_t bytesReceived = socket.receive_from(boost::asio::buffer(recv_buffer), clientEndpoint);
     if(!firstPacketRecieved) {
         //first packet to contain total number of packets sent
         try {
@@ -47,6 +50,7 @@ void Server::receive(){
         
     } else {
         for (std::size_t i = 0; i < numPacks; i++){
+            std::cout << "LOOPING" << std::endl;
             boost::system::error_code error;
             bytesReceived = socket.receive_from(boost::asio::buffer(recv_buffer), clientEndpoint, 0, error);
             

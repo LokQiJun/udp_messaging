@@ -1,5 +1,5 @@
 #ifndef ENTITY_H
-#define ENTITY_h
+#define ENTITY_H
 
 //#include "fileTransfer/FileTransfer.h"
 #include "vidStream/VidStream.h"
@@ -7,11 +7,9 @@
 #include <string>
 #include <boost/asio.hpp>
 
-
-// abstract class
+// Base class for Server and Client
 class Entity 
 {
-
     protected:
         VidStream *vidStream;
         //FileTransfer *fileTranfer;
@@ -27,8 +25,11 @@ class Entity
         Entity(std::string socketAddress, int socketPort);
         ~Entity();
 
-        
+        // Accessors
+        boost::asio::ip::udp::endpoint getEntityEndpoint();
+        boost::asio::ip::udp::socket& getEntitySocket();
 
+        // Mutators
         void openUDPSocket();
         void bindUDPSocket(); // Server only
         void closeSocket();

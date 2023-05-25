@@ -7,6 +7,7 @@ class VidStream
     public: 
         VidStream();
         ~VidStream();
+        
 };
 
 #endif

@@ -12,6 +12,7 @@ Server::Server(std::string socketAddress, int socketPort) : Entity(socketAddress
 
 // Destructor
 Server::~Server() {
+    Entity::closeSocket();
 }
 
 // Private Functions
@@ -32,7 +33,8 @@ void Server::receive(){
 
     // declare output file for receive operation
     // #TODO: implement file type agnostic file declaration
-    std::ofstream outputFile = std::ofstream("storage/" + getCurrTime() + ".txt", std::ios::binary | std::ios::app);
+    std::string filepath = "storage/" + getCurrTime() + ".txt";
+    std::ofstream outputFile = std::ofstream( filepath, std::ios::binary | std::ios::app);
     if(!outputFile.is_open()){
         std::cout << "Failed to write to output file" << std::endl;
         return;
@@ -50,7 +52,6 @@ void Server::receive(){
         
     } else {
         for (std::size_t i = 0; i < numPacks; i++){
-            std::cout << "LOOPING" << std::endl;
             boost::system::error_code error;
             bytesReceived = socket.receive_from(boost::asio::buffer(recv_buffer), clientEndpoint, 0, error);
             
@@ -62,10 +63,10 @@ void Server::receive(){
             outputFile.write(recv_buffer.data(), bytesReceived);
         }
     }
-
+    
+    std::cout << "File recieved and stored as " << filepath << std::endl;
+    return;
 }
-
-
 
 // Public Functions
 void Server::listen() {
@@ -73,5 +74,3 @@ void Server::listen() {
         receive(); //Synchronous receive
     }
 }
-
-

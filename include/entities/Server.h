@@ -17,6 +17,7 @@ class Server : public Entity {
         ~Server();
 
         void listen();
+
 };
 
 #endif

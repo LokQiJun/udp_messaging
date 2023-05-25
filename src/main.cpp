@@ -4,9 +4,18 @@
 
 int main(){
     std::string socketAddress = "127.0.0.1";
-    int socketPort = 5000;
-    Server server(socketAddress, socketPort);
+    int socketPort = 5005;
 
-    server.listen();
+    // Server server(socketAddress, socketPort);
+    // server.listen();
+
+    
+    Client client(socketAddress, socketPort);
+    std::string res = "";
+    while (res != "q"){
+        std::cout << "Enter your message ('q' to quit): ";
+        std::getline(std::cin, res);
+        client.send(res);
+    }
     return 0;
 }

@@ -8,8 +8,3 @@ $ mkdir build
 $ cmake --build build
 $ build/server_client
 ```
-
-
-a=c=0 
-
-c=4

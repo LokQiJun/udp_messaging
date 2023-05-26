@@ -15,7 +15,6 @@ class Client : public Entity {
         void send(std::string msg);
         void sendFile(std::string filepath);
 
-
 };
 
 #endif

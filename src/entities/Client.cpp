@@ -10,6 +10,8 @@ Client::Client(std::string socketAddress, int socketPort)
 {
 }
 
+Client::~Client(){}
+
 void Client::send_handler(std::vector<char> data_buf){
     Entity::openUDPSocket();
     boost::asio::ip::udp::socket& socket = Entity::getEntitySocket();
@@ -26,24 +28,24 @@ void Client::send_handler(std::vector<char> data_buf){
 
 void Client::send(std::string msg){
     std::size_t offset = 0;
-    std::vector<char> buffer(PACKET_SIZE);
-
+    
     while (offset < msg.size()) {
         std::size_t length = std::min(PACKET_SIZE, int(msg.size() - offset));
+        std::vector<char> buffer(length);
 
         // copy string into buffer, up till max buffer size
         std::copy(msg.begin() + offset, msg.begin() + offset + length, buffer.begin());
 
         // fill buffer if there is empty space
-        if (length < PACKET_SIZE) {
-            std::fill(buffer.begin() + length, buffer.end(), '\0');
-        }
+        // if (length < PACKET_SIZE) {
+        //     std::fill(buffer.begin() + length, buffer.end(), '\0');
+        // }
         // Process the buffer
         send_handler(buffer);
 
         offset += length;
     }
-    
+    send_handler(std::vector<char>(0));// send b'' over to terminate
     std::cout << "Message sent." << std::endl;
 
     return;

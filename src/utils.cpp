@@ -13,3 +13,8 @@ std::string getCurrTime()
 
     return currentTimeStr;
 }
+
+int ceilDiv(int numerator, int denominator)
+{
+    return numerator/denominator + (numerator%denominator != 0);
+}

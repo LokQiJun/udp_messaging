@@ -2,6 +2,7 @@
 #include "utils.h"
 
 #include <iostream>
+#include <vector>
 #include <algorithm>
 #include <fstream>
 
@@ -34,11 +35,18 @@ void Client::send_handler(std::vector<char> data_buf)
 void Client::send(std::string msg)
 {
     std::size_t offset = 0;
+    int numPacks = ceilDiv(msg.size(), PACKET_SIZE);
+    
     
     while (offset < msg.size())
     {
         std::size_t length = std::min(PACKET_SIZE, int(msg.size() - offset));
         std::vector<char> buffer(length);
+
+        std::vector<char> lenBuf(1);
+        std::string len = "1";
+        std::copy(len.begin(), len.begin()+1, lenBuf.begin());
+        send_handler(lenBuf);
 
         // copy string into buffer
         std::copy(msg.begin() + offset, msg.begin() + offset + length, buffer.begin());
@@ -46,7 +54,7 @@ void Client::send(std::string msg)
 
         offset += length;
     }
-    send_handler(std::vector<char>(0));// send b'' over to terminate
+    // send_handler(std::vector<char>(0));// send b'' over to terminate
     std::cout << "Message sent." << std::endl;
 
     return;

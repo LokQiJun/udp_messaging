@@ -41,6 +41,7 @@ void Server::receive()
     std::cout << filepath << std::endl;
     std::ofstream outputFile(filepath, (std::ios::binary | std::ios::app));
     std::string sVal = std::string(recv_buffer.data(), bytesReceived);
+    std::cout << sVal << std::endl;
     
     if (!outputFile.is_open())
     {

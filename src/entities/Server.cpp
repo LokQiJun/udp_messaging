@@ -41,8 +41,7 @@ void Server::receive()
     std::cout << filepath << std::endl;
     std::ofstream outputFile(filepath, (std::ios::binary | std::ios::app));
     std::string sVal = std::string(recv_buffer.data(), bytesReceived);
-    std::cout << sVal << std::endl;
-    
+      
     if (!outputFile.is_open())
     {
         std::cout << "Failed to open file" << std::endl;
@@ -64,6 +63,8 @@ void Server::receive()
     for (std::size_t i = 0; i < numPacks; i++)
     {
         boost::system::error_code error;
+        
+        recv_buffer = {};
         bytesReceived = socket.receive_from(boost::asio::buffer(recv_buffer), clientEndpoint, 0, error);
         
         if (error && error != boost::asio::error::message_size) 
@@ -71,7 +72,7 @@ void Server::receive()
             std::cout << "Failed to receive packet " << i << " (" << error.message() << ")" << std::endl;
             break;
         }
-        std::cout << recv_buffer.data() << std::endl;
+        std::cout <<"\n" << i << "\n" << recv_buffer.data() << std::endl;
         outputFile.write(recv_buffer.data(), bytesReceived);
     }
 

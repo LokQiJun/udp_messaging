@@ -18,6 +18,7 @@ Client::~Client()
 
 void Client::send_handler(std::vector<char> data_buf)
 {
+    // TODO: manage socket connection more efficiently 
     Entity::openUDPSocket();
     boost::asio::ip::udp::socket& socket = Entity::getEntitySocket();
     boost::asio::ip::udp::endpoint endpoint = Entity::getEntityEndpoint();
@@ -35,20 +36,20 @@ void Client::send_handler(std::vector<char> data_buf)
 void Client::send(std::string msg)
 {
     std::size_t offset = 0;
-    int numPacks = ceilDiv(msg.size(), PACKET_SIZE);
-    
+
+    std::string numPacks = std::to_string(ceilDiv(msg.size(), PACKET_SIZE));
+    std::vector<char> buffer(numPacks.begin(), numPacks.begin()+1); 
+    send_handler(buffer);
     
     while (offset < msg.size())
     {
+        buffer.clear();
+
         std::size_t length = std::min(PACKET_SIZE, int(msg.size() - offset));
-        std::vector<char> buffer(length);
+        std::cout << "LENGTH: " << length << "; msg.size(): " << msg.size() << "; offset: " << offset << std::endl;
+        buffer.resize(length);
+        buffer.shrink_to_fit();
 
-        std::vector<char> lenBuf(1);
-        std::string len = "1";
-        std::copy(len.begin(), len.begin()+1, lenBuf.begin());
-        send_handler(lenBuf);
-
-        // copy string into buffer
         std::copy(msg.begin() + offset, msg.begin() + offset + length, buffer.begin());
         send_handler(buffer);
 

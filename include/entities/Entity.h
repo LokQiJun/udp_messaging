@@ -1,11 +1,12 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <string>
+#include <boost/asio.hpp>
+
 //#include "fileTransfer/FileTransfer.h"
 #include "vidStream/VidStream.h"
 
-#include <string>
-#include <boost/asio.hpp>
 
 // Base class for Server and Client
 class Entity 

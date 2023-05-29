@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "entities/Server.h"
 #include "entities/Client.h"
 
@@ -24,11 +25,17 @@ int main(int argc, char *argv[])
 
             while (true)
             {
-                std::cout << "Enter your message ('q' to quit): ";
+                // std::cout << "Enter your message ('q' to quit): ";
+                // std::getline(std::cin, res);
+                
+                // if (res == "q") break;
+                // else client.send(res);
+
+                std::cout << "Enter filepath ('q' to quit): ";
                 std::getline(std::cin, res);
                 
                 if (res == "q") break;
-                else client.send(res);
+                else client.sendFile(res);
             }   
         }
     }

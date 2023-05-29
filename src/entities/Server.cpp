@@ -1,9 +1,9 @@
-#include "entities/Server.h"
-#include "utils.h"
-
 #include <iostream>
 #include <fstream>
 #include <boost/array.hpp>
+
+#include "entities/Server.h"
+#include "utils.h"
 
 // Constructor
 Server::Server(std::string socketAddress, int socketPort) : Entity(socketAddress, socketPort)
@@ -37,8 +37,8 @@ void Server::receive()
 
     // declare output file for receive operation
     // #TODO: implement file type agnostic file declaration
-    std::string filepath = "storage/" + getCurrTime() + ".txt";
-    std::cout << filepath << std::endl;
+    std::string filepath = "storage/" + getCurrTime() + ".mp4";
+    //std::cout << filepath << std::endl;
     std::ofstream outputFile(filepath, (std::ios::binary | std::ios::app));
     std::string sVal = std::string(recv_buffer.data(), bytesReceived);
       
@@ -56,7 +56,7 @@ void Server::receive()
     } 
     catch (std::exception& e) 
     {
-        std::cout << "error reading lead packet, failed to read file" << std::endl;
+        //std::cout << "error reading lead packet, failed to read file" << std::endl;
         return;
     }
         
@@ -72,7 +72,7 @@ void Server::receive()
             std::cout << "Failed to receive packet " << i << " (" << error.message() << ")" << std::endl;
             break;
         }
-        std::cout <<"\n" << i << "\n" << recv_buffer.data() << std::endl;
+        //std::cout <<"\n" << i << "\n" << recv_buffer.data() << std::endl;
         outputFile.write(recv_buffer.data(), bytesReceived);
     }
 

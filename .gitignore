@@ -1,2 +1,7 @@
 build/
 .vscode/
+
+*.txt
+*.jpeg
+*.jpg
+*.mp4

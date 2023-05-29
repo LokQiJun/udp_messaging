@@ -1,10 +1,10 @@
-#include "entities/Client.h"
-#include "utils.h"
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <fstream>
+
+#include "entities/Client.h"
+#include "utils.h"
 
 Client::Client(std::string socketAddress, int socketPort) 
     : Entity(socketAddress, socketPort) 
@@ -63,8 +63,7 @@ void Client::send(std::string msg)
 
 void Client::sendFile(std::string filepath)
 {
-
-    // open file
+    // Open file
     std::ifstream file(filepath, std::ios::binary);
     if (!file)
     {
@@ -72,12 +71,32 @@ void Client::sendFile(std::string filepath)
         return;
     }
 
-    // send packets 
-    // TODO: Check for number of packets and send as first pack + create buffer based on available data
-    std::vector<char> buffer(PACKET_SIZE);
-    while (file.read(buffer.data(), PACKET_SIZE)) 
+    // file size 
+    file.seekg(0, file.end);
+    int filesize = file.tellg();
+    file.seekg(0, file.beg);
+
+    std::string numPacks = std::to_string(ceilDiv(filesize, PACKET_SIZE));
+    std::cout << "LENGTH: " << filesize << " , Num Packs: " << numPacks << std::endl;
+    std::vector<char> buffer(numPacks.begin(), numPacks.begin()+sizeof(numPacks)); 
+    send_handler(buffer);
+
+    int read = 0;
+    int count = 0;
+    while (read < filesize)
     {
+        buffer.clear();
+        int length = std::min(PACKET_SIZE, filesize-read);
+        buffer.resize(length);
+        buffer.shrink_to_fit();
+
+        // std::copy(file.beg+read, file.beg+read+length, buffer.begin());
+        file.read(buffer.data(), length);
         send_handler(buffer);
+        read += length;
+        //std::cout << read << " chars sent" << std::endl;
+        count +=1;
+        std::cout << count << ", ";
     }
 
     std::cout << "File sent." << std::endl;

@@ -1,5 +1,6 @@
-#include "entities/Entity.h"
 #include <iostream>
+
+#include "entities/Entity.h"
 
 using boost::asio::ip::udp;
 

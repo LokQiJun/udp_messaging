@@ -2,8 +2,7 @@
 #include <iomanip> 
 #include <sstream>
 
-
-#define PACKET_SIZE 1024
+#define PACKET_SIZE 10240
 
 std::string getCurrTime();
 

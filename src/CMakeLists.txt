@@ -4,7 +4,10 @@ add_library(src
     entities/Client.cpp
     entities/Entity.cpp
     entities/Server.cpp
-    sender/StreamSender.cpp
+    receiver/TextReceiver.cpp
+    # receiver/FileReceiver.cpp
+    # sender/TextSender.cpp
+    # sender/FileSender.cpp
     utils.cpp
     main.cpp
 )

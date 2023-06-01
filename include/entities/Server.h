@@ -9,7 +9,6 @@ class Server : public Entity {
 
         void initUDPSocket();
         void receive(); //non-blocking receive 
-        void receiveHandler(const boost::system::error_code& error, size_t bytesTransferred);
         
 
     public:

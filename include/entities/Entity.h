@@ -5,16 +5,12 @@
 #include <boost/asio.hpp>
 
 //#include "fileTransfer/FileTransfer.h"
-#include "vidStream/VidStream.h"
 
 
 // Base class for Server and Client
 class Entity 
 {
     protected:
-        VidStream *vidStream;
-        //FileTransfer *fileTranfer;
-        
         std::string socketAddress;
         int socketPort;
         boost::asio::io_service ioService;

@@ -38,7 +38,6 @@ void Server::receive()
     // declare output file for receive operation
     // #TODO: implement file type agnostic file declaration
     std::string filepath = "storage/" + getCurrTime() + ".mp4";
-    //std::cout << filepath << std::endl;
     std::ofstream outputFile(filepath, (std::ios::binary | std::ios::app));
     std::string sVal = std::string(recv_buffer.data(), bytesReceived);
       
@@ -82,6 +81,18 @@ void Server::receive()
     return;
 }
 
+// int Server::receive(boost::array<char, PACKET_SIZE>& buffer)
+// {
+//     boost::asio::ip::udp::endpoint clientEndpoint;
+//     boost::system::error_code error;
+//     int bytesReceived =  socket.receive_from(boost::asio::buffer(buffer), clientEndpoint, 0, error);
+//     if (error)
+//     {
+//         std::cerr <<"Failed to receive packed" << std::endl;
+//         return;
+//     }
+//     return bytesReceived;
+// }
 
 // Public Functions
 void Server::listen() 

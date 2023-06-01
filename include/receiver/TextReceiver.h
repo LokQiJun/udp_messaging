@@ -9,6 +9,6 @@ class TextReceiver : public Receiver
         TextReceiver();
         ~TextReceiver();
 
-        boost::array<char, PACKET_SIZE> handleData();
+        void handleData(boost::array<char, PACKET_SIZE>& buffer, int bytesReceived) override;
 };
 #endif

@@ -3,6 +3,7 @@
 
 #include "utils.h"
 
+#include <string>
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
 
@@ -12,7 +13,7 @@ class Receiver
         Receiver();
         virtual ~Receiver();
 
-        virtual boost::array<char, PACKET_SIZE> handleData() = 0;
+        virtual void handleData(boost::array<char, PACKET_SIZE>& buffer, int bytesReceived, std::string filepath) = 0;
 };
 
 #endif

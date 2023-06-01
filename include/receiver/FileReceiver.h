@@ -9,7 +9,7 @@ class FileReceiver : public Receiver
         FileReceiver();
         ~FileReceiver();
 
-        boost::array<char, PACKET_SIZE> handleData() override;
+        void handleData(boost::array<char, PACKET_SIZE>& buffer, int bytesReceived, std::string filepath) override;
 };
 
 #endif

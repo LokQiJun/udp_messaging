@@ -2,6 +2,7 @@ build/
 .vscode/
 
 *.txt
+!message.txt
 *.jpeg
 *.jpg
 *.mp4

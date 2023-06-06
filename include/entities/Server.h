@@ -9,18 +9,14 @@
 // UDP Server Class
 class Server : public Entity {
     private: 
-        void initUDPSocket();
-        void receive(); 
-        
+        void initUDPSocket();     
 
     public:
         Server(std::string socketAddress, int socketPort);
         ~Server();
 
-        int receive(boost::array<char, PACKET_SIZE>& buffer);
-        int receive(boost::array<char, STREAM_SIZE>& buffer);
-        void listen();
-
+        int receive(boost::array<char, PACKET_SIZE>& buffer); // Text Message and Files
+        int receive(boost::array<char, STREAM_SIZE>& buffer); // Video Stream
 };
 
 #endif

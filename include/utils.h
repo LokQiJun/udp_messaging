@@ -11,3 +11,5 @@ std::string getCurrDatetimeStr();
 std::string datetimeToFilename();
 
 int ceilDiv(int numerator, int denominator);
+
+void appUsage();

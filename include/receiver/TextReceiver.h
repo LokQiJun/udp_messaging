@@ -13,4 +13,5 @@ class TextReceiver : public Receiver
 
         void receive() override;
 };
+
 #endif

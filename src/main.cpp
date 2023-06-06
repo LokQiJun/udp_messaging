@@ -1,7 +1,9 @@
 #include <iostream>
 
-#include "entities/Server.h"
-#include "entities/Client.h"
+#include "sender/TextSender.h"
+#include "sender/FileSender.h"
+#include "receiver/TextReceiver.h"
+#include "receiver/FileReceiver.h"
 #include "streamDownload/VidStreamDownload.h"
 #include "streamUpload/VidStreamUpload.h"
 
@@ -9,29 +11,58 @@ int main(int argc, char *argv[])
 {
 
     std::string socketAddress = "127.0.0.1";
-    int socketPort = 5005;
+    int socketPort = 5006;
 
-
-    if (strcmp(argv[1], "-S") == 0 )
+    if (argc < 2)
     {
-        Server server(socketAddress, socketPort);
-        server.listen();
+        appUsage();
+        return 0;
+    }
 
-    } 
-    else if (strcmp(argv[1], "-C") == 0)
+    if (strcmp(argv[1], "-TS") == 0)
     {
+        Client* fileSendClient = new Client(socketAddress, socketPort);
+        TextSender textSender(fileSendClient);
         
-        Client client(socketAddress, socketPort);
-        std::string res = "";
-
+        std::string text;  
         while (true)
         {
-            std::cout << "Enter filepath ('q' to quit): ";
-            std::getline(std::cin, res);
+            std::cout << "Enter message ('q' to quit): ";
+            std::getline(std::cin, text);
             
-            if (res == "q") break;
-            else client.sendFile(res);
+            if (text == "q") break;
+            else textSender.send(text);
         }   
+
+    }
+    else if (strcmp(argv[1], "-TR") == 0)
+    {
+        Server* textRecieveServer = new Server(socketAddress, socketPort);
+        TextReceiver textReceiver(textRecieveServer);
+        textReceiver.receive();
+
+    }
+    else if (strcmp(argv[1], "-FS") == 0)
+    {
+        Client* fileSendClient = new Client(socketAddress, socketPort);
+        FileSender fileSender(fileSendClient);
+        
+        std::string filepath;  
+        while (true)
+        {
+            std::cout << "Enter message ('q' to quit): ";
+            std::getline(std::cin, filepath);
+            
+            if (filepath == "q") break;
+            else fileSender.send(filepath);
+        }   
+    }
+    else if (strcmp(argv[1], "-FR") == 0)
+    {
+        Server* fileRecieveServer = new Server(socketAddress, socketPort);
+        FileReceiver fileReceiver(fileRecieveServer);
+        fileReceiver.receive();
+
     }
     else if (strcmp(argv[1], "-U") == 0)
     {
@@ -56,14 +87,8 @@ int main(int argc, char *argv[])
     }
     else 
     {
-        std::cout << "Usage:" << std::endl;
-        std::cout << "-C : Client mode" << std::endl;
-        std::cout << "-S : Server mode" << std::endl;
-        std::cout << "-U : Stream upload mode " << std::endl;
-        std::cout << "-D : Stream download mode " << std::endl;
+        appUsage();
     }
 
-
-    
     return 0;
 }

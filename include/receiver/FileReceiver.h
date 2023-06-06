@@ -11,4 +11,5 @@ class FileReceiver : public Receiver
 
         void receive() override;
 };
+
 #endif

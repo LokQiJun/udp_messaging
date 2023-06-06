@@ -19,10 +19,6 @@ class Entity
         Entity(std::string socketAddress, int socketPort);
         ~Entity();
 
-        // Accessors
-        boost::asio::ip::udp::endpoint getEntityEndpoint();
-        boost::asio::ip::udp::socket& getEntitySocket();
-
         // Mutators
         void openUDPSocket();
         void bindUDPSocket(); // Server only

@@ -1,5 +1,7 @@
 #include "utils.h"
 
+#include <iostream>
+
 std::time_t getCurrDatetime()
 {
     // Get the current time
@@ -29,4 +31,15 @@ std::string datetimeToFilename()
 int ceilDiv(int numerator, int denominator)
 {
     return numerator/denominator + (numerator%denominator != 0);
+}
+
+void appUsage()
+{
+    std::cout << "Usage:" << std::endl;
+    std::cout << "-TS : Text Send mode" << std::endl;
+    std::cout << "-TR : Text Receive mode" << std::endl;
+    std::cout << "-FS : File Send mode" << std::endl;
+    std::cout << "-FR : File Receive mode" << std::endl;
+    std::cout << "-U : Stream upload mode " << std::endl;
+    std::cout << "-D : Stream download mode " << std::endl;
 }

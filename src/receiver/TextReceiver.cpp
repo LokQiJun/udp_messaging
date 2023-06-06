@@ -26,6 +26,7 @@ void TextReceiver::receive()
     {
         buffer = {}; //clear buffer
         bytesReceived = server -> receive(buffer);
-        std::cout << "Received [" << getCurrDatetimeStr() << "]" << buffer.data() << std::endl;
+        std::cout << "Received [" << getCurrDatetimeStr() << "] " << buffer.data() << std::endl;
     }
+    std::cout << "Message Received." << std::endl;
 }

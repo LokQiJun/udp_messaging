@@ -5,7 +5,6 @@
 
 class VidStreamUpload : public StreamUpload
 {
-    
     public:
         VidStreamUpload(Client* client);
         ~VidStreamUpload() override;

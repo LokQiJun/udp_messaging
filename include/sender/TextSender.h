@@ -11,4 +11,5 @@ class TextSender : public Sender
 
         void send(std::string content) override;
 };
+
 #endif

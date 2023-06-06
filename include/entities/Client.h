@@ -11,9 +11,6 @@ class Client : public Entity {
         ~Client();
 
         void send_handler(std::vector<char> data);
-        void send(std::string msg);
-        void sendFile(std::string filepath);
-
 };
 
 #endif

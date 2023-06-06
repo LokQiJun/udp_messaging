@@ -11,4 +11,6 @@ class FileSender : public Sender
 
         void send(std::string content) override;
 };
+
 #endif
+

@@ -27,9 +27,9 @@ void FileReceiver::receive()
         std::cerr << e.what() << std::endl;
     }
     
-    
+    std::cout << numPacks << std::endl;
     //Create file
-    std::string filepath = "storage/" + datetimeToFilename() + ".txt";
+    std::string filepath = "storage/" + datetimeToFilename() + ".mp4";
     std::ofstream outputfile(filepath, (std::ios::binary | std::ios::app));
     if (!outputfile.is_open())
     {
@@ -39,6 +39,7 @@ void FileReceiver::receive()
     
     for (std::size_t i = 0; i < numPacks; i++)
     {
+        
         buffer = {}; //clear buffer
         bytesReceived = server -> receive(buffer);
         outputfile.write(buffer.data(), bytesReceived);

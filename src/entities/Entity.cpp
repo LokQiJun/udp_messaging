@@ -15,17 +15,6 @@ Entity::~Entity()
 {
 }
 
-//Accessors 
-boost::asio::ip::udp::endpoint Entity::getEntityEndpoint()
-{
-        return endpoint;
-}
-
-boost::asio::ip::udp::socket& Entity::getEntitySocket()
-{
-        return socket;
-}
-
 // Mutators
 void Entity::openUDPSocket()
 {

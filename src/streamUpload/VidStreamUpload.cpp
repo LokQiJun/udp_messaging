@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream> 
 #include <opencv2/opencv.hpp> 
-
 #include <chrono>
 #include <thread> 
 
@@ -20,19 +19,20 @@ VidStreamUpload::~VidStreamUpload()
 void VidStreamUpload::upload(std::string filepath)
 {
     // Check filetype 
-    // std::string filetype = filepath.substr(filepath.length()-4);
-    // if (filetype.compare(".mp4") != 0)
-    // {
-    //     std::cerr << "Input file needs to be an mp4 file" << std::endl;
-    //     return;
-    // }
+    std::string filetype = filepath.substr(filepath.length()-4);
+    if (filetype.compare(".mp4") != 0)
+    {
+        std::cerr << "Input file needs to be an mp4 file" << std::endl;
+        return;
+    }
 
     // Open video file
-    // cv::VideoCapture video(filepath);
+    cv::VideoCapture video(filepath);
     
-    //Open webcam
-    cv::VideoCapture video;
-    video.open(0);
+    // //Open webcam
+    // cv::VideoCapture video;
+    // video.open(0);
+    
     if (!video.isOpened())
     {
         std::cerr << "Unable to open video file." << std::endl;

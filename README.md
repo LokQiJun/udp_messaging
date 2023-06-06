@@ -3,6 +3,8 @@
 ## Pre-requisites 
 - CMake 
 - G++ compiler
+- Boost
+- OpenCV
 
 ## User Instructions 
 ```

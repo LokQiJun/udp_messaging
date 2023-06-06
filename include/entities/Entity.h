@@ -4,9 +4,6 @@
 #include <string>
 #include <boost/asio.hpp>
 
-//#include "fileTransfer/FileTransfer.h"
-
-
 // Base class for Server and Client
 class Entity 
 {

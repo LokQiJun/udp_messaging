@@ -3,12 +3,12 @@
 
 #include "Sender.h"
 
-class TextSender : public TextSender
+class TextSender : public Sender
 {
     public:
-        TextSender();
-        ~TextSender();
+        TextSender(Client* client);
+        ~TextSender() override;
 
-        std::vector<char> send(std::string content) override;
-}
+        void send(std::string content) override;
+};
 #endif

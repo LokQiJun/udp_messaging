@@ -6,11 +6,9 @@
 class FileSender : public Sender
 {
     public:
-        FileSender();
-        ~FileSender();
+        FileSender(Client* client);
+        ~FileSender() override;
 
-        std::vector<char> send(std::string content) override;
-}
-
-
+        void send(std::string content) override;
+};
 #endif

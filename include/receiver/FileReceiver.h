@@ -6,10 +6,9 @@
 class FileReceiver : public Receiver
 {
     public:
-        FileReceiver();
-        ~FileReceiver();
+        FileReceiver(Server* server);
+        ~FileReceiver() override;
 
-        void handleData(boost::array<char, PACKET_SIZE>& buffer, int bytesReceived, std::string filepath) override;
+        void receive() override;
 };
-
 #endif

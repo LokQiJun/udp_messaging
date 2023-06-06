@@ -1,16 +1,19 @@
 #ifndef SENDER_H
 #define SENDER_H 
 
+#include "../entities/Client.h"
+
 #include <string>
-#include <vector>
 
 class Sender 
 {
+    protected:
+        Client* client;
     public:
-        Sender();
-        virtual ~Sender();
+        Sender(Client* client) : client(client) {}
+        virtual ~Sender() {}
 
-        virtual std::vector<char> send(std::string content) = 0;
+        virtual void send(std::string content) = 0;
 };
 
 #endif

@@ -3,12 +3,14 @@
 
 #include "Receiver.h"
 
+#include <fstream>
+
 class TextReceiver : public Receiver
 {
     public:
-        TextReceiver();
-        ~TextReceiver();
+        TextReceiver(Server* server);
+        ~TextReceiver() override;
 
-        void handleData(boost::array<char, PACKET_SIZE>& buffer, int bytesReceived) override;
+        void receive() override;
 };
 #endif

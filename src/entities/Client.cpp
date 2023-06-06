@@ -9,7 +9,7 @@
 Client::Client(std::string socketAddress, int socketPort) 
     : Entity(socketAddress, socketPort) 
 {    
-    std::cout << "Client started" << std::endl;
+    std::cout << "Client assigned to " << socketAddress << ":" << socketPort << std::endl;
 }
 
 Client::~Client()
@@ -19,6 +19,7 @@ Client::~Client()
 void Client::send_handler(std::vector<char> data_buf)
 {
     // TODO: manage socket connection more efficiently 
+    // TODO: check limit for buffer size
     Entity::openUDPSocket();
     boost::asio::ip::udp::socket& socket = Entity::getEntitySocket();
     boost::asio::ip::udp::endpoint endpoint = Entity::getEntityEndpoint();

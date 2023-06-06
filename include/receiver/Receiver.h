@@ -2,18 +2,20 @@
 #define RECEIVER_H
 
 #include "utils.h"
+#include "entities/Server.h"
 
 #include <string>
-#include <boost/asio.hpp>
 #include <boost/array.hpp>
 
 class Receiver
 {
+    protected:
+        Server* server;
     public:
-        Receiver();
-        virtual ~Receiver();
+        Receiver(Server* server) : server(server) {}
+        virtual ~Receiver() {}
 
-        virtual void handleData(boost::array<char, PACKET_SIZE>& buffer, int bytesReceived, std::string filepath) = 0;
+        virtual void receive() = 0;
 };
 
 #endif

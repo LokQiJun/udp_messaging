@@ -1,9 +1,11 @@
 #include "receiver/TextReceiver.h"
 
 #include <iostream>
+#include <chrono>
 #include <fstream>
 
-TextReceiver::TextReceiver()
+TextReceiver::TextReceiver(Server* server)
+    : Receiver(server)
 {
 }
 
@@ -11,11 +13,19 @@ TextReceiver::~TextReceiver()
 {
 }
 
-void TextReceiver::handleData(boost::array<char, PACKET_SIZE>& buffer, int bytesReceived, std::string filepath)
+void TextReceiver::receive()
 {
-    std::cout << "\n" << buffer.data() << std::endl;
-    std::ofstream outputFile(filepath, (std::ios::binary | std::ios::app));
-    outputFile << getCurrTime() + ": " + buffer.data();
+    //Accept lead packet with meta data
+    boost::array<char,PACKET_SIZE> buffer;
+    int bytesReceived = server -> receive(buffer);
 
-    outputFile.close();
+    int numPacks = std::stoi(std::string(buffer.data(), bytesReceived));
+    
+    //Receive all data packets
+    for (std::size_t i = 0; i < numPacks; i++)
+    {
+        buffer = {}; //clear buffer
+        bytesReceived = server -> receive(buffer);
+        std::cout << "Received [" << getCurrDatetimeStr() << "]" << buffer.data() << std::endl;
+    }
 }

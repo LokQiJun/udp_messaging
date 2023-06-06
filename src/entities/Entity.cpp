@@ -35,7 +35,6 @@ void Entity::openUDPSocket()
 void Entity::bindUDPSocket()
 {
         socket.bind(endpoint);
-        std::cout << "Socket binded to " << socketAddress << ":" << socketPort << std::endl;
 }
 
 void Entity::closeSocket()

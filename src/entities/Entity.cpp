@@ -15,17 +15,6 @@ Entity::~Entity()
 {
 }
 
-//Accessors 
-boost::asio::ip::udp::endpoint Entity::getEntityEndpoint()
-{
-        return endpoint;
-}
-
-boost::asio::ip::udp::socket& Entity::getEntitySocket()
-{
-        return socket;
-}
-
 // Mutators
 void Entity::openUDPSocket()
 {
@@ -35,7 +24,6 @@ void Entity::openUDPSocket()
 void Entity::bindUDPSocket()
 {
         socket.bind(endpoint);
-        std::cout << "Socket binded to " << socketAddress << ":" << socketPort << std::endl;
 }
 
 void Entity::closeSocket()

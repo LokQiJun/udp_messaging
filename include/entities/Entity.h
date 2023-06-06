@@ -4,17 +4,10 @@
 #include <string>
 #include <boost/asio.hpp>
 
-//#include "fileTransfer/FileTransfer.h"
-#include "vidStream/VidStream.h"
-
-
 // Base class for Server and Client
 class Entity 
 {
     protected:
-        VidStream *vidStream;
-        //FileTransfer *fileTranfer;
-        
         std::string socketAddress;
         int socketPort;
         boost::asio::io_service ioService;
@@ -25,10 +18,6 @@ class Entity
         // Constructor and Destructor
         Entity(std::string socketAddress, int socketPort);
         ~Entity();
-
-        // Accessors
-        boost::asio::ip::udp::endpoint getEntityEndpoint();
-        boost::asio::ip::udp::socket& getEntitySocket();
 
         // Mutators
         void openUDPSocket();

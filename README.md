@@ -1,5 +1,9 @@
 # UDP client-server application
 
+## Pre-requisites 
+- CMake 
+- G++ compiler
+
 ## User Instructions 
 ```
 $ git clone https://github.com/changdaozheng/udp_messaging.git

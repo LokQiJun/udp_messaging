@@ -4,6 +4,12 @@ add_library(src
     entities/Client.cpp
     entities/Entity.cpp
     entities/Server.cpp
+    receiver/TextReceiver.cpp
+    receiver/FileReceiver.cpp
+    sender/FileSender.cpp
+    sender/TextSender.cpp
+    streamDownload/VidStreamDownload.cpp
+    streamUpload/VidStreamUpload.cpp
     utils.cpp
     main.cpp
 )

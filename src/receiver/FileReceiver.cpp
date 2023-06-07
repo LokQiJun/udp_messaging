@@ -15,8 +15,8 @@ FileReceiver::~FileReceiver()
 void FileReceiver::receive()
 {
     //Accept lead packet with meta data
-    boost::array<char,PACKET_SIZE> buffer;
-    int bytesReceived = server -> receive(buffer);
+    std::vector<char> buffer(PACKET_SIZE);
+    int bytesReceived = server -> receive_handler(buffer);
     int numPacks;
     try
     {
@@ -39,9 +39,9 @@ void FileReceiver::receive()
     
     for (std::size_t i = 0; i < numPacks; i++)
     {
-        
-        buffer = {}; //clear buffer
-        bytesReceived = server -> receive(buffer);
+        buffer.clear();
+        buffer.resize(PACKET_SIZE);
+        bytesReceived = server -> receive_handler(buffer);
         outputfile.write(buffer.data(), bytesReceived);
     }
 

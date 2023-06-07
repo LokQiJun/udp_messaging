@@ -24,7 +24,22 @@ void Server::initUDPSocket()
     Entity::bindUDPSocket();
 } 
 
-int Server::receive(boost::array<char, PACKET_SIZE>& buffer)
+int Server::receive_handler(std::vector<char>& buffer)
+{   
+    
+    boost::asio::ip::udp::endpoint clientEndpoint;
+    boost::system::error_code error;
+    int bytesReceived = socket.receive_from(boost::asio::buffer(buffer), clientEndpoint);
+    
+    if (error && error != boost::asio::error::message_size) 
+    {
+        std::cerr << "Server failed to receive packet: " << error.message() << std::endl;
+    }
+  
+    return bytesReceived;
+}
+
+int Server::receive_handler(boost::array<char, PACKET_SIZE>& buffer)
 {
     boost::asio::ip::udp::endpoint clientEndpoint;
     boost::system::error_code error;
@@ -38,7 +53,7 @@ int Server::receive(boost::array<char, PACKET_SIZE>& buffer)
     return bytesReceived;
 }
 
-int Server::receive(boost::array<char, STREAM_SIZE>& buffer)
+int Server::receive_handler(boost::array<char, STREAM_SIZE>& buffer)
 {
     boost::asio::ip::udp::endpoint clientEndpoint;
     boost::system::error_code error;

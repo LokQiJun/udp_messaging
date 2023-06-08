@@ -15,14 +15,17 @@ VidStreamDownload::~VidStreamDownload()
 
 void VidStreamDownload::download()
 {
-    cv::namedWindow("StreamDownload");
+    std::vector<char> buffer(STREAM_SIZE);
+
     cv::Mat frame;
     std::vector<char> frameBuffer;
     int frameCount = 0;
+    cv::namedWindow("StreamDownload");
     while (true)
     {
-        boost::array<char, STREAM_SIZE> buffer;
-        int bytesReceived = server -> receive(buffer);
+        buffer.clear();
+        buffer.resize(STREAM_SIZE);   
+        int bytesReceived = server -> receive_handler(buffer);
 
         frameBuffer.clear();
         frameBuffer.resize(bytesReceived);

@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+const char* flushBuffer = "#___flush___#";
+
 std::time_t getCurrDatetime()
 {
     // Get the current time

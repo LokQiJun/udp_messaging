@@ -18,10 +18,15 @@ Client::~Client()
 
 void Client::send_handler(std::vector<char> data_buf)
 {
-    // TODO: manage socket connection more efficiently 
-    // TODO: check limit for buffer size
     Entity::openUDPSocket();
     boost::system::error_code err;
+
+    std::cout << data_buf.data() << std::endl;
+    
+    if (PACKET_SIZE > data_buf.size())
+    {
+        data_buf.resize(PACKET_SIZE, '\x00');
+    }
     
     socket.send_to(boost::asio::buffer(data_buf), Entity::endpoint, 0, err );
     if (err) 

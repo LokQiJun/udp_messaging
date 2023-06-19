@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "utils.h"
 #include "sender/TextSender.h"
 #include "sender/FileSender.h"
 #include "receiver/TextReceiver.h"
@@ -12,6 +13,8 @@ int main(int argc, char *argv[])
 
     std::string socketAddress = "127.0.0.1";
     int socketPort = 5006;
+    int senderPort = 5000;
+    int receiverPort = 5005;
 
     if (argc < 2)
     {
@@ -21,8 +24,8 @@ int main(int argc, char *argv[])
 
     if (strcmp(argv[1], "-TS") == 0)
     {
-        Client* fileSendClient = new Client(socketAddress, socketPort);
-        TextSender textSender(fileSendClient);
+        Client* textSendClient = new Client(socketAddress, senderPort);
+        TextSender textSender(textSendClient);
         
         std::string text;  
         while (true)
@@ -31,21 +34,26 @@ int main(int argc, char *argv[])
             std::getline(std::cin, text);
             
             if (text == "q") break;
-            else textSender.send(text);
-        }   
+            else 
+            {
+                textSender.send(text);
+                //textSender.send(flushBuffer);
+            }   
+        }
 
     }
     else if (strcmp(argv[1], "-TR") == 0)
     {
-        Server* textRecieveServer = new Server(socketAddress, socketPort);
+        Server* textRecieveServer = new Server(socketAddress, receiverPort);
         TextReceiver textReceiver(textRecieveServer);
         textReceiver.receive();
 
     }
     else if (strcmp(argv[1], "-FS") == 0)
     {
-        Client* fileSendClient = new Client(socketAddress, socketPort);
+        Client* fileSendClient = new Client(socketAddress, senderPort);
         FileSender fileSender(fileSendClient);
+        TextSender textSender(fileSendClient);
         
         std::string filepath;  
         while (true)
@@ -54,12 +62,17 @@ int main(int argc, char *argv[])
             std::getline(std::cin, filepath);
             
             if (filepath == "q") break;
-            else fileSender.send(filepath);
+            else 
+            {
+                fileSender.send(filepath);
+                //textSender.send(flushBuffer);
+            }
         }   
+        
     }
     else if (strcmp(argv[1], "-FR") == 0)
     {
-        Server* fileRecieveServer = new Server(socketAddress, socketPort);
+        Server* fileRecieveServer = new Server(socketAddress, receiverPort);
         FileReceiver fileReceiver(fileRecieveServer);
         fileReceiver.receive();
 

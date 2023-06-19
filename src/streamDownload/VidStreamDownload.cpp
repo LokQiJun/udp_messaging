@@ -37,7 +37,7 @@ void VidStreamDownload::download()
             frame = cv::imdecode(frameBuffer, cv::IMREAD_COLOR);
             cv::imshow("StreamDownload", frame);
             
-            if(cv::waitKey(200) != -1)
+            if(cv::waitKey(50) != -1)
             {
                 break;
             }

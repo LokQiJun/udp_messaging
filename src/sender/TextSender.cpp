@@ -2,6 +2,8 @@
 #include "utils.h"
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 TextSender::TextSender(Client* client)
     : Sender(client)
@@ -36,6 +38,7 @@ void TextSender::send(std::string content)
         
         std::cout << "Progress: " << ((offset+length)/content.size())*100 << "%" << std::endl;
         offset += length;
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     
     std::cout << "Message sent." << std::endl;

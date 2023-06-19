@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <chrono> 
+#include <thread>
 
 FileSender::FileSender(Client* client)
     : Sender(client)
@@ -24,7 +26,7 @@ void FileSender::send(std::string content)
         return;
     }
 
-    // Segment file into packets 
+    // Get filesize 
     file.seekg(0, file.end);
     int filesize = file.tellg();
     file.seekg(0, file.beg);
@@ -40,6 +42,7 @@ void FileSender::send(std::string content)
     int count = 0; // Number of packets sent
     while (read < filesize)
     {
+        // Allocate space for buffer
         buffer.clear();
         int length = std::min(PACKET_SIZE, filesize-read);
         buffer.resize(length);
@@ -51,6 +54,8 @@ void FileSender::send(std::string content)
         
         count +=1;
         std::cout << count << ", ";
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     std::cout << filepath << " sent." << std::endl;

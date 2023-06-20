@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
             else 
             {
                 textSender.send(text);
-                //textSender.send(flushBuffer);
             }   
         }
 
@@ -65,7 +64,6 @@ int main(int argc, char *argv[])
             else 
             {
                 fileSender.send(filepath);
-                //textSender.send(flushBuffer);
             }
         }   
         

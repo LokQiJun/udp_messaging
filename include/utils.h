@@ -9,13 +9,15 @@
 #define STREAM_SIZE 20000
 #define STREAM_FRAME_RATE 10
 
-extern const char* flushBuffer;
+
 
 std::time_t getCurrDatetime();
 std::string getCurrDatetimeStr();
 std::string datetimeToFilename();
 
 int ceilDiv(int numerator, int denominator);
+
+std::string substrRightOf(std::string str, std::string pattern);
 
 void appUsage();
 

@@ -10,6 +10,7 @@ add_library(src
     sender/TextSender.cpp
     streamDownload/VidStreamDownload.cpp
     streamUpload/VidStreamUpload.cpp
+    UDPPacket/UDPPacket.cpp
     utils.cpp
     main.cpp
 )

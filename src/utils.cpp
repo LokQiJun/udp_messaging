@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-const char* flushBuffer = "#___flush___#";
+
 
 std::time_t getCurrDatetime()
 {
@@ -33,6 +33,20 @@ std::string datetimeToFilename()
 int ceilDiv(int numerator, int denominator)
 {
     return numerator/denominator + (numerator%denominator != 0);
+}
+
+
+std::string substrRightOf(std::string str, std::string pattern)
+{
+    std::size_t found = str.find_last_of(pattern);
+
+    // Strip parent directories, if any
+    if(found != std::string::npos)
+    {
+        str = str.substr(found + 1);
+    } 
+    
+    return str;
 }
 
 void appUsage()

@@ -18,12 +18,7 @@ void FileReceiver::receive()
     //Accept lead packet with meta data
     std::vector<char> buffer(PACKET_SIZE);
     int bytesReceived = server -> receive_handler(buffer);
-    if (strcmp(std::string(buffer.data(), bytesReceived).c_str(),flushBuffer)==0)
-    {   
-        buffer.clear();
-        buffer.resize(PACKET_SIZE);
-        bytesReceived = server -> receive_handler(buffer);   
-    }
+    
     if (buffer.data() == NULL)
     {
         std::cout << "Is NULL" << std::endl;
@@ -48,16 +43,8 @@ void FileReceiver::receive()
         buffer.resize(PACKET_SIZE);
         bytesReceived = server -> receive_handler(buffer);
         
-        if (strcmp(std::string(buffer.data(), bytesReceived).c_str(),flushBuffer)!=0)
-        {
-            std::cout << i << ", ";
-            outputfile.write(buffer.data(), bytesReceived);
-        } 
-        else
-        {
-            i--;
-        }
-        
+        std::cout << i << ", ";
+        outputfile.write(buffer.data(), bytesReceived);
     }
 
     outputfile.close();

@@ -6,14 +6,34 @@
 #include "entities/Client.h"
 #include "utils.h"
 
-Client::Client(std::string socketAddress, int socketPort) 
-    : Entity(socketAddress, socketPort) 
-{    
+// Initialise singleton instance
+Client* Client::clientInstance = nullptr;
+
+// Constructor 
+Client::Client()
+    : Entity("127.0.0.0", CLIENT_PORT)
+{
     std::cout << "Client assigned to " << socketAddress << ":" << socketPort << std::endl;
 }
 
+Client::Client(std::string socketAddress, int socketPort) 
+    : Entity(socketAddress, socketPort) 
+{  
+    std::cout << "Client assigned to " << socketAddress << ":" << socketPort << std::endl;
+}
+
+// Destructor
 Client::~Client()
 {
+}
+
+Client* Client::getInstance()
+{
+    if (clientInstance == NULL)
+    {
+        clientInstance = new Client();
+    }
+    return clientInstance;
 }
 
 void Client::send_handler(std::vector<char> data_buf)

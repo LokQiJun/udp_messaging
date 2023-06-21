@@ -4,12 +4,15 @@
 #include "Entity.h"
 
 // UDP Client Class
-class Client : public Entity {
-        
+class Client : public Entity 
+{
+    private:
+        static Client* clientInstance;
+        Client();
+        ~Client();
     public:
         Client(std::string socketAddress, int socketPort);
-        ~Client();
-
+        static Client* getInstance();
         void send_handler(std::vector<char> data);
 };
 

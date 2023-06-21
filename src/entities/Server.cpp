@@ -4,8 +4,20 @@
 #include <iostream>
 #include <fstream>
 #include <boost/array.hpp>
+
+// Initialise singleton instance 
+Server* Server::serverInstance = nullptr; 
+
 // Constructor
-Server::Server(std::string socketAddress, int socketPort) : Entity(socketAddress, socketPort)
+Server::Server()
+    : Entity("127.0.0.0", SERVER_PORT)
+{
+    initUDPSocket();
+    std::cout << "Server started at " << "127.0.0.0" << ":" << SERVER_PORT << std::endl;
+}
+
+Server::Server(std::string socketAddress, int socketPort) 
+    : Entity(socketAddress, socketPort)
 {
     initUDPSocket();
     std::cout << "Server started at " << socketAddress << ":" << socketPort << std::endl;
@@ -23,6 +35,15 @@ void Server::initUDPSocket()
     Entity::openUDPSocket();
     Entity::bindUDPSocket();
 } 
+
+Server* Server::getInstance()
+{
+    if (serverInstance == NULL)
+    {
+        serverInstance = new Server();
+    }
+    return serverInstance;
+}
 
 int Server::receive_handler(std::vector<char>& buffer)
 {   

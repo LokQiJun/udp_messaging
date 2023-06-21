@@ -21,7 +21,7 @@ void Client::send_handler(std::vector<char> data_buf)
     Entity::openUDPSocket();
     boost::system::error_code err;
 
-    std::cout << data_buf.data() << std::endl;
+    // std::cout << data_buf.data() << std::endl;
     
     if (PACKET_SIZE > data_buf.size())
     {

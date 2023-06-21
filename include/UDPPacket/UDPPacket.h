@@ -17,7 +17,7 @@ struct UDPHeader
 std::string stripBreadcrumb(std::string filepath);
 std::string extractFiletype(std::string filename);
 
-UDPHeader formatHeader(std::string filename, std::string filetype, int filesize);
+UDPHeader formatHeader(std::string filename, int filesize);
 int attachHeader(const UDPHeader& udpHeader, std::vector<char>& buffer);
 UDPHeader removeHeader(std::vector<char>& buffer);
 

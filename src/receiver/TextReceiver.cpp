@@ -1,6 +1,9 @@
 #include "receiver/TextReceiver.h"
+#include "UDPPacket/UDPPacket.h"
 #include "utils.h"
 
+#include <map>
+#include <vector> 
 #include <iostream>
 #include <chrono>
 #include <fstream>
@@ -16,23 +19,37 @@ TextReceiver::~TextReceiver()
 
 void TextReceiver::receive()
 {
-    //Accept lead packet with meta data
+    // Stores packets in order (key: packetOrder, value: packet payload)
+    std::map<int, std::vector<char>> receivedPackets;
+
+    // Util variables for receiveing packet
     std::vector<char> buffer(PACKET_SIZE);
-    int bytesReceived = server -> receive_handler(buffer);
-    std::cout << buffer.data() << std::endl;
-
-    int numPacks = std::stoi(std::string(buffer.data(), bytesReceived));
-
-    //Receive all data packets
-    for (std::size_t i = 0; i < numPacks; i++)
+    int bytesReceived = 0;
+    int numPacks = 0;
+    
+    // Receive
+    std::cout << "Receiving..." << std::endl;
+    do 
     {
+        // Receive Packets
+        bytesReceived = server -> receive_handler(buffer);
+        UDPHeader udpHeader = removeHeader(buffer);
+        
+        // Set number of packets to receive
+        numPacks = udpHeader.numPackets;
+
+        // Store packet payload in map
+        receivedPackets[udpHeader.packetOrder] = buffer;
+
         buffer.clear();
         buffer.resize(PACKET_SIZE);
-        bytesReceived = server -> receive_handler(buffer);
-        
-        
-        std::cout << "Received [" << getCurrDatetimeStr() << "] " << buffer.data() << std::endl;
-    
+    }   
+    while (receivedPackets.size() < numPacks);
+
+    //Print message
+    for (const auto& pair: receivedPackets)
+    {
+        std::cout << "\nPacket " << pair.first << ": " << std::string(pair.second.begin(), pair.second.end()) << std::endl;
     }
     std::cout << "Message Received." << std::endl;
 }

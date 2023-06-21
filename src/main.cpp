@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     std::string socketAddress = "127.0.0.1";
     int socketPort = 5006;
-    int senderPort = 5000;
+    int senderPort = 5005;
     int receiverPort = 5005;
 
     if (argc < 2)

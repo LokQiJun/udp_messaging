@@ -2,6 +2,7 @@
 #include <utils.h>
 
 #include <cstring>
+#include <iostream>
 
 
 std::string stripBreadcrumb(std::string filepath)
@@ -18,11 +19,11 @@ std::string extractFiletype(std::string filename)
 int size_t_size  = sizeof(std::size_t);
 int int_size = sizeof(int);
 
-UDPHeader formatHeader(std::string filename, std::string filetype, int filesize)
+UDPHeader formatHeader(std::string filepath, int filesize)
 {
     // Format filename and filetype 
-    filename = stripBreadcrumb(filename);
-    filetype = extractFiletype(filename);
+    std::string filename = stripBreadcrumb(filepath);
+    std::string filetype = extractFiletype(filename);
 
     // Calculate sizes
     std::size_t headerSize = sizeof(size_t) * 2 + 
@@ -40,7 +41,6 @@ UDPHeader formatHeader(std::string filename, std::string filetype, int filesize)
 
     return udpHeader;
 }
-
 
 
 int attachHeader(const UDPHeader& udpHeader, std::vector<char>& buffer)
@@ -81,7 +81,7 @@ UDPHeader removeHeader(std::vector<char>& buffer)
     memcpy(&filenameLength, buffer.data(), size_t_size);
     buffer.erase(buffer.begin(), buffer.begin()+size_t_size);
 
-    memcpy(&udpHeader.filename, buffer.data(), filenameLength);
+    udpHeader.filename = std::string(buffer.data(), filenameLength);
     buffer.erase(buffer.begin(), buffer.begin()+filenameLength);
 
     // Extract filetype
@@ -89,7 +89,7 @@ UDPHeader removeHeader(std::vector<char>& buffer)
     memcpy(&filetypeLength, buffer.data(), size_t_size);
     buffer.erase(buffer.begin(), buffer.begin()+size_t_size);
 
-    memcpy(&udpHeader.filetype, buffer.data(), filetypeLength);
+    udpHeader.filetype = std::string(buffer.data(), filetypeLength);
     buffer.erase(buffer.begin(), buffer.begin()+filetypeLength);
 
     // Extract num packets

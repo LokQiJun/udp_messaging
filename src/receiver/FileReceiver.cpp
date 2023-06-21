@@ -1,8 +1,10 @@
 #include "receiver/FileReceiver.h"
+#include "UDPPacket/UDPPacket.h"
 #include "utils.h"
 
 #include <iostream>
 #include <fstream>
+#include <map>
 
 FileReceiver::FileReceiver(Server* server)
     : Receiver(server)
@@ -15,36 +17,51 @@ FileReceiver::~FileReceiver()
 
 void FileReceiver::receive()
 {
-    //Accept lead packet with meta data
+    // Stores packets in order (key: packetOrder, value: packet payload)
+    std::map<int, std::vector<char>> receivedPackets;
+
+    // Util variables for receiveing packet
     std::vector<char> buffer(PACKET_SIZE);
-    int bytesReceived = server -> receive_handler(buffer);
-    
-    if (buffer.data() == NULL)
-    {
-        std::cout << "Is NULL" << std::endl;
-    }
-    std::cout << buffer.data() << std::endl;
-    int numPacks = std::stoi(std::string(buffer.data(), bytesReceived));
-    std::cout << numPacks << std::endl;
+    int bytesReceived = 0;
+    int numPacks = 0;
+    std::string filetype = "";
    
+    // Receive
+    std::cout << "Receiving..." << std::endl;
+    do 
+    {
+        // Receive Packets
+        bytesReceived = server -> receive_handler(buffer);
+        UDPHeader udpHeader = removeHeader(buffer);
+        
+        // Set number of packets to receive
+        if (numPacks == 0) numPacks = udpHeader.numPackets;
+
+        // Set filetype
+        if (filetype.empty()) filetype = udpHeader.filetype;
+
+        // Store packet payload in map
+        receivedPackets[udpHeader.packetOrder] = buffer;
+        std::cout << udpHeader.packetOrder << ", ";
+
+        buffer.clear();
+        buffer.resize(PACKET_SIZE);
+    }   
+    while (receivedPackets.size() < numPacks);
+
     //Create file
-    std::string filepath = "storage/" + datetimeToFilename() + ".jpeg";
+    std::cout << "Writing file..." << std::endl;
+    std::string filepath = "storage/" + datetimeToFilename() + "." + filetype;
     std::ofstream outputfile(filepath, (std::ios::binary | std::ios::app));
     if (!outputfile.is_open())
     {
         std::cerr << "Failed to open file." << std::endl;
         return;
     }
-    
-    std::cout << "Receiving" << std::endl;
-    for (std::size_t i = 0; i < numPacks; i++)
+
+    for (const auto& pair: receivedPackets)
     {
-        buffer.clear();
-        buffer.resize(PACKET_SIZE);
-        bytesReceived = server -> receive_handler(buffer);
-        
-        std::cout << i << ", ";
-        outputfile.write(buffer.data(), bytesReceived);
+        outputfile.write(pair.second.data(), pair.second.size());
     }
 
     outputfile.close();

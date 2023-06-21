@@ -1,4 +1,5 @@
 #include "sender/FileSender.h"
+#include "UDPPacket/UDPPacket.h"
 #include "utils.h"
 
 #include <iostream>
@@ -31,30 +32,34 @@ void FileSender::send(std::string content)
     int filesize = file.tellg();
     file.seekg(0, file.beg);
 
-    //Send metadata
-    std::string numPacks = std::to_string(ceilDiv(filesize, PACKET_SIZE));
-    std::cout << "LENGTH: " << filesize << " , Num Packs: " << numPacks << std::endl;
-    std::vector<char> buffer(numPacks.begin(), numPacks.begin() + sizeof(numPacks)); 
-    client -> send_handler(buffer); 
+    // Format custom header for UDP packet
+    UDPHeader udpHeader = formatHeader(filepath, filesize);
+    std::vector<char> buffer(PACKET_SIZE);
     
 
+    int packetCount = 0; // Number of packets sent
     int read = 0; // Number of bytes read from file
-    int count = 0; // Number of packets sent
     while (read < filesize)
     {
-        // Allocate space for buffer
+        // Prepare buffer for next data packet
         buffer.clear();
-        int length = std::min(PACKET_SIZE, filesize-read);
-        buffer.resize(length);
-        buffer.shrink_to_fit();
+        buffer.resize(PACKET_SIZE);
 
-        file.read(buffer.data(), length);
+        // Attach header to UDP packet
+        packetCount++;
+        udpHeader.packetOrder = packetCount;
+        int headerSize = attachHeader(udpHeader, buffer);
+
+        // Calculate payload size
+        std::size_t payloadSize = std::min(PACKET_SIZE-headerSize, filesize-read);
+
+        // Client sends buffer
+        std::cout << packetCount << ", ";
+        file.read(buffer.data() + headerSize, payloadSize);
         client -> send_handler(buffer);
-        read += length;
         
-        count +=1;
-        std::cout << count << ", ";
-        
+        // Update variables for next iteration
+        read += payloadSize;
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 

@@ -38,13 +38,14 @@ int Server::receive_handler(std::vector<char>& buffer)
     }
     while (buffer.size() == PACKET_SIZE && std::all_of(buffer.begin(), buffer.end(), [](char c) { return c == '\x00'; }));
 
+
     // remove trailing null chars
     while (!buffer.empty() && buffer.back() == '\x00')
     {
         buffer.pop_back();
         bytesReceived--;
     }
-    std::cout << buffer.data() << std::endl;
+    //std::cout << buffer.data() << std::endl;
     // if (error && error != boost::asio::error::message_size) 
     // {
     //     std::cerr << "Server failed to receive packet: " << error.message() << std::endl;
@@ -53,32 +54,32 @@ int Server::receive_handler(std::vector<char>& buffer)
     return bytesReceived;
 }
 
-int Server::receive_handler(boost::array<char, PACKET_SIZE>& buffer)
-{
-    boost::asio::ip::udp::endpoint clientEndpoint;
-    boost::system::error_code error;
-    int bytesReceived = socket.receive_from(boost::asio::buffer(buffer), clientEndpoint, 0, error);
+// int Server::receive_handler(boost::array<char, PACKET_SIZE>& buffer)
+// {
+//     boost::asio::ip::udp::endpoint clientEndpoint;
+//     boost::system::error_code error;
+//     int bytesReceived = socket.receive_from(boost::asio::buffer(buffer), clientEndpoint, 0, error);
     
-    if (error && error != boost::asio::error::message_size) 
-    {
-        std::cerr << "Server failed to receive packet: " << error.message() << std::endl;
-    }
+//     if (error && error != boost::asio::error::message_size) 
+//     {
+//         std::cerr << "Server failed to receive packet: " << error.message() << std::endl;
+//     }
     
-    return bytesReceived;
-}
+//     return bytesReceived;
+// }
 
-int Server::receive_handler(boost::array<char, STREAM_SIZE>& buffer)
-{
-    boost::asio::ip::udp::endpoint clientEndpoint;
-    boost::system::error_code error;
-    int bytesReceived = socket.receive_from(boost::asio::buffer(buffer), clientEndpoint, 0, error);
+// int Server::receive_handler(boost::array<char, STREAM_SIZE>& buffer)
+// {
+//     boost::asio::ip::udp::endpoint clientEndpoint;
+//     boost::system::error_code error;
+//     int bytesReceived = socket.receive_from(boost::asio::buffer(buffer), clientEndpoint, 0, error);
     
-    if (error && error != boost::asio::error::message_size) 
-    {
-        std::cerr << "Server failed to receive packet: " << error.message() << std::endl;
-    }
+//     if (error && error != boost::asio::error::message_size) 
+//     {
+//         std::cerr << "Server failed to receive packet: " << error.message() << std::endl;
+//     }
     
-    return bytesReceived;
-}
+//     return bytesReceived;
+// }
 
 

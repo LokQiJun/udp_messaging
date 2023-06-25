@@ -8,6 +8,7 @@ add_library(src
     receiver/FileReceiver.cpp
     sender/FileSender.cpp
     sender/TextSender.cpp
+    sender/SenderFactory.cpp
     streamDownload/VidStreamDownload.cpp
     streamUpload/VidStreamUpload.cpp
     UDPPacket/UDPPacket.cpp

@@ -9,7 +9,7 @@ class SenderFactory
 {
     public:
         Sender* makeSender(std::string senderType);
-}
+};
 
 
 #endif

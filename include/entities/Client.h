@@ -7,6 +7,7 @@
 #include <vector>
 
 // UDP Client Class
+
 class Client : public Entity 
 {
     private:
@@ -26,7 +27,7 @@ class Client : public Entity
         static Client* getInstance();  
 
         // Setter
-        void setQueueCapcity(int x);
+        static void setQueueCapcity(int x);
 
         // Functions 
         bool queuePriority(std::vector<char>& buffer);

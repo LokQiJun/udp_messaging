@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "utils.h"
+#include "../concurrency/ThreadPool.h"
 
 #include <vector>
 
@@ -21,9 +22,9 @@ class Server : public Entity
         // Server(std::string socketAddress, int socketPort);
         static Server* getInstance();
         
-        int receive_handler(std::vector<char>& buffer);
-        // int receive_handler(boost::array<char, PACKET_SIZE>& buffer); // Text Message and Files
-        // int receive_handler(boost::array<char, STREAM_SIZE>& buffer); // Video Stream
+        int receivePackets(std::vector<char>& buffer);
+        // int receivePackets(boost::array<char, PACKET_SIZE>& buffer); // Text Message and Files
+        // int receivePackets(boost::array<char, STREAM_SIZE>& buffer); // Video Stream
 };
 
 #endif

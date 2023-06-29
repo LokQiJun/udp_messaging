@@ -8,6 +8,8 @@
 
 // Initialise singleton instance
 Client* Client::clientInstance = nullptr;
+// Default queue size
+int Client::queueCapacity = 10; 
 
 // Constructor 
 Client::Client()
@@ -29,6 +31,11 @@ Client* Client::getInstance()
         clientInstance = new Client();
     }
     return clientInstance;
+}
+
+void Client::setQueueCapcity(int x)
+{
+    queueCapacity = x;
 }
 
 bool Client::queuePriority(std::vector<char>& buffer)

@@ -16,12 +16,12 @@ Server::Server()
     std::cout << "Server started at " << "127.0.0.0" << ":" << SERVER_PORT << std::endl;
 }
 
-Server::Server(std::string socketAddress, int socketPort) 
-    : Entity(socketAddress, socketPort)
-{
-    initUDPSocket();
-    std::cout << "Server started at " << socketAddress << ":" << socketPort << std::endl;
-}
+// Server::Server(std::string socketAddress, int socketPort) 
+//     : Entity(socketAddress, socketPort)
+// {
+//     initUDPSocket();
+//     std::cout << "Server started at " << socketAddress << ":" << socketPort << std::endl;
+// }
 
 // Destructor
 Server::~Server()
@@ -45,7 +45,7 @@ Server* Server::getInstance()
     return serverInstance;
 }
 
-int Server::receive_handler(std::vector<char>& buffer)
+int Server::receivePackets(std::vector<char>& buffer)
 {   
     
     boost::asio::ip::udp::endpoint clientEndpoint;
@@ -65,17 +65,11 @@ int Server::receive_handler(std::vector<char>& buffer)
     {
         buffer.pop_back();
         bytesReceived--;
-    }
-    //std::cout << buffer.data() << std::endl;
-    // if (error && error != boost::asio::error::message_size) 
-    // {
-    //     std::cerr << "Server failed to receive packet: " << error.message() << std::endl;
-    // }
-  
+    }  
     return bytesReceived;
 }
 
-// int Server::receive_handler(boost::array<char, PACKET_SIZE>& buffer)
+// int Server::receivePackets(boost::array<char, PACKET_SIZE>& buffer)
 // {
 //     boost::asio::ip::udp::endpoint clientEndpoint;
 //     boost::system::error_code error;
@@ -89,7 +83,7 @@ int Server::receive_handler(std::vector<char>& buffer)
 //     return bytesReceived;
 // }
 
-// int Server::receive_handler(boost::array<char, STREAM_SIZE>& buffer)
+// int Server::receivePackets(boost::array<char, STREAM_SIZE>& buffer)
 // {
 //     boost::asio::ip::udp::endpoint clientEndpoint;
 //     boost::system::error_code error;
@@ -103,4 +97,5 @@ int Server::receive_handler(std::vector<char>& buffer)
 //     return bytesReceived;
 // }
 
-
+// receiveHandler handles all incoming UDPPackets and uses ThreadPool
+// to call textReceiver and fileReceiver 

@@ -31,7 +31,7 @@ void FileReceiver::receive()
     do 
     {
         // Receive Packets
-        bytesReceived = server -> receive_handler(buffer);
+        bytesReceived = server -> receivePackets(buffer);
         UDPHeader udpHeader = removeHeader(buffer);
         
         // Set number of packets to receive

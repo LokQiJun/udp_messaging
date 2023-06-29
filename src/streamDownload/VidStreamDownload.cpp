@@ -25,7 +25,7 @@ void VidStreamDownload::download()
     {
         buffer.clear();
         buffer.resize(STREAM_SIZE);   
-        int bytesReceived = server -> receive_handler(buffer);
+        int bytesReceived = server -> receivePackets(buffer);
 
         frameBuffer.clear();
         frameBuffer.resize(bytesReceived);

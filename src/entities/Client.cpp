@@ -13,9 +13,9 @@ int Client::queueCapacity = 10;
 
 // Constructor 
 Client::Client()
-    : Entity("127.0.0.0", CLIENT_PORT) // localhost
+    : Entity("127.0.0.1", CLIENT_PORT) // localhost
 {
-    std::cout << "Client assigned to 127.0.0.0:" << socketPort << std::endl;
+    std::cout << "Client assigned to 127.0.0.1:" << socketPort << std::endl;
 }
 
 // Destructor

@@ -1,12 +1,14 @@
 #include "concurrency/ThreadPool.h"
 
 #include <thread>
+#include <iostream>
 
 ThreadPool::ThreadPool(int numThreads)
     : stopPool(false)
 {
     for (int i = 0; i < numThreads; ++i)
     {
+        std::cout << "Thread " << i << std::endl;
         threads.emplace_back([this]{
             while (true)
             {
@@ -40,12 +42,4 @@ ThreadPool::~ThreadPool()
     {
         thread.join(); // wait for all threads to finish
     }
-}
-
-template <typename F, typename ...Args>
-void ThreadPool::joinQueue(F&& f, Args&&... args) // forward reference
-{
-    std::unique_lock<std::mutex> lock(queueMutex); // obtain mutex to write to queue
-    tasks.emplace([=] { std::__invoke(std::forward<F>(f), std::forward<Args>(args)...); });
-    queueCondition.notify_one();
 }

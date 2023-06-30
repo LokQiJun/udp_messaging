@@ -1,15 +1,20 @@
 #include "receiver/MainReceiver.h"
 
+#include "concurrency/ThreadPool.h"
 #include "UDPPacket/UDPPacket.h"
 #include "utils.h"
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <functional>
 
-void MainReceiver::receiveHandler()
+
+void MainReceiver::run()
 {
+    std::cout << "In MainReceiver::run()" << std::endl;
     
-    pool -> joinQueue(std::function<void()>([this]{
+    auto receive = [this](){
+        std::cout << "receive function ran by thread" << std::endl;
         // Receive UDP packet
         std::vector<char> buffer(PACKET_SIZE); 
         server -> receivePackets(buffer);
@@ -65,5 +70,6 @@ void MainReceiver::receiveHandler()
                 std::cout << "File received and stored as " << filepath << std::endl;
             }
         }
-    }));
+    };
+    pool->joinQueue(receive);
 }

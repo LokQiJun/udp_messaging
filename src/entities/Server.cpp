@@ -10,10 +10,10 @@ Server* Server::serverInstance = nullptr;
 
 // Constructor
 Server::Server()
-    : Entity("127.0.0.0", SERVER_PORT)
+    : Entity("127.0.0.1", SERVER_PORT)
 {
     initUDPSocket();
-    std::cout << "Server started at " << "127.0.0.0" << ":" << SERVER_PORT << std::endl;
+    std::cout << "Server started at " << "127.0.0.1" << ":" << SERVER_PORT << std::endl;
 }
 
 // Server::Server(std::string socketAddress, int socketPort) 

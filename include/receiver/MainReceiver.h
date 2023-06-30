@@ -9,6 +9,7 @@
 #include <mutex>
 #include <string>
 #include <vector>
+#include <iostream>
 #include <boost/array.hpp>
 
 class MainReceiver
@@ -20,10 +21,12 @@ class MainReceiver
         std::mutex mapMutex;
     public:
         MainReceiver(Server* server, int numThreads)
-            : server(server), pool(new ThreadPool(numThreads)){};
+            : server(server), pool(new ThreadPool(numThreads)){
+                std::cout << "In Main Receiver Constructor" << std::endl;
+            };
         ~MainReceiver(){};
 
-        void receiveHandler();
+        void run();
 };
 
 #endif

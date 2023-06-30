@@ -5,6 +5,8 @@
 #include "sender/FileSender.h"
 #include "receiver/TextReceiver.h"
 #include "receiver/FileReceiver.h"
+#include "receiver/MainReceiver.h"
+#include "concurrency/ThreadPool.h"
 #include "streamDownload/VidStreamDownload.h"
 #include "streamUpload/VidStreamUpload.h"
 #include "sender/SenderFactory.h"
@@ -21,51 +23,73 @@ int main(int argc, char *argv[])
     Server* server = Server::getInstance();
     Client* client = Client::getInstance();
 
-    auto senderInterface = []()
-    {
-        while (true)
-        {
-            std::string senderType;
-            std::cout << "Sender Type (message/file) or `quit`: ";
-            std::cin >> senderType;
-            if (strcmp(senderType.c_str(), "quit"))
-            {
-                break;
-            }
+    // auto senderInterface = []()
+    // {
+    //     while (true)
+    //     {
+    //         std::string senderType;
+    //         std::cout << "Sender Type (message/file) or `quit`: ";
+    //         std::cin >> senderType;
+    //         if (strcmp(senderType.c_str(), "quit"))
+    //         {
+    //             break;
+    //         }
 
-            SenderFactory senderFactory;
-            Sender* sender = senderFactory.makeSender(senderType);
+    //         SenderFactory senderFactory;
+    //         Sender* sender = senderFactory.makeSender(senderType);
 
-            if (sender)
-            {
-                std::thread senderThread([&sender, &senderType]() 
-                {
-                    std::cout << senderType << ": ";
+    //         if (sender)
+    //         {
+    //             std::thread senderThread([&sender, &senderType]() 
+    //             {
+    //                 std::cout << senderType << ": ";
                 
-                    std::string content;
-                    std::cin >> content;
-                    sender -> send(content);
-                });
+    //                 std::string content;
+    //                 std::cin >> content;
+    //                 sender -> send(content);
+    //             });
 
-                senderThread.join();
-            }
-            else
-            {
-                std::cerr << "Invalid Sender Type" << std::endl;
-            }
-        }
+    //             senderThread.join();
+    //         }
+    //         else
+    //         {
+    //             std::cerr << "Invalid Sender Type" << std::endl;
+    //         }
+    //     }
+    // };
+
+
+
+    auto receiverInterface = [](Server* server) {
+        int numThreads = 10;
+        std::cout << "In receiver interface." << std::endl;
+        MainReceiver mainReceiver(server, numThreads);
+        mainReceiver.run();
     };
-
-    std::thread senderInterfaceThread(senderInterface);
-    std::thread clientSendThread([&client]()
-    {
-        client->send_handler();
-    });
-
-    senderInterfaceThread.join();
-    clientSendThread.join();
-
+    std::thread receiverThread(receiverInterface, server);
+    receiverThread.join();
     
+    // if (argc < 2)
+    // {
+    //     appUsage();
+    //     return 0;
+    // }
+
+    // if (strcmp(argv[1], "-S") == 0)
+    // {
+    //     std::thread senderInterfaceThread(senderInterface);
+    //     std::thread clientSendThread([&client]()
+    //     {
+    //         client->send_handler();
+    //     });
+    //     senderInterfaceThread.join();
+    //     clientSendThread.join();
+    // }
+    // else if (strcmp(argv[1], "-R") == 0)
+    // {
+    //     std::thread(receiverInterface);
+    //     receiverInterface.join();
+    // }   
 
     // if (argc < 2)
     // {

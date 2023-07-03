@@ -37,7 +37,7 @@ ThreadPool::~ThreadPool()
     }
 
     queueCondition.notify_all(); // notifies all waiting threads to wake and destroy themselves
-
+    
     for (auto& thread : threads)
     {
         thread.join(); // wait for all threads to finish

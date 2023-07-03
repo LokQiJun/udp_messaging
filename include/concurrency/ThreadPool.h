@@ -5,6 +5,7 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#include <future>
 #include <iostream>
 #include <functional>
 #include <condition_variable>
@@ -20,25 +21,27 @@ class ThreadPool
     
     public:
         ThreadPool(int numThreads);
-        ~ThreadPool();
-
-        // template <typename F, typename ...Args>
-        // void joinQueue(F&& f, Args&&... args)
-        // {
-        //     std::cout << "Joining lambda function to queue" << std::endl;
-        //     std::unique_lock<std::mutex> lock(queueMutex); // obtain mutex to write to queue
-        //     tasks.emplace([=] { std::__invoke(std::forward<F>(f), std::forward<Args>(args)...); });
-        //     queueCondition.notify_one();
-        //     std::cout << "Joined lambda function to queue, waiting for thread to run" << std::endl;
-        // }
+        ~ThreadPool();        
         
-        
-        template <typename F>
-        void joinQueue(F f)
+        template <typename F, typename... Args>
+        void joinQueue(F&& f, Args&&... args)
         {
             std::cout << "Joining lambda function to queue" << std::endl;
-            std::unique_lock<std::mutex> lock(queueMutex); // obtain mutex to write to queue
-            tasks.emplace(&f);
+            auto task = std::make_shared<std::packaged_task<void()>> (
+                std::bind(std::forward<F>(f), std::forward<Args>(args)...)
+            );
+
+            // Critical section (Tasks queue)
+            {
+                std::unique_lock<std::mutex> lock(queueMutex);
+                if (stopPool)
+                {
+                    std::cerr << "ThreadPool stopped, unable to queue more tasks" << std::endl;
+                    return;
+                }
+                tasks.emplace([task](){(*task)();}); // lambda function exexutes task when called
+            }
+
             queueCondition.notify_one();
             std::cout << "Joined lambda function to queue, waiting for thread to run" << std::endl;
         }

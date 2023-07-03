@@ -26,6 +26,7 @@ class MainReceiver
             };
         ~MainReceiver(){};
 
+        void packetHandler(std::vector<char>& buffer);
         void run();
 };
 

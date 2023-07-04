@@ -21,10 +21,8 @@ class MainReceiver
         std::mutex mapMutex;
     public:
         MainReceiver(Server* server, int numThreads)
-            : server(server), pool(new ThreadPool(numThreads)){
-                std::cout << "In Main Receiver Constructor" << std::endl;
-            };
-        ~MainReceiver(){};
+            : server(server), pool(new ThreadPool(numThreads)){}
+        ~MainReceiver(){}
 
         void packetHandler(std::vector<char>& buffer);
         void run();

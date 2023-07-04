@@ -9,7 +9,7 @@
 #define STREAM_SIZE 20000
 #define STREAM_FRAME_RATE 10
 
-#define CLIENT_PORT 5000
+#define CLIENT_PORT 5005
 #define SERVER_PORT 5005
 
 std::time_t getCurrDatetime();

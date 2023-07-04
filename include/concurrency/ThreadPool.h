@@ -26,7 +26,6 @@ class ThreadPool
         template <typename F, typename... Args>
         void joinQueue(F&& f, Args&&... args)
         {
-            std::cout << "Joining lambda function to queue" << std::endl;
             auto task = std::make_shared<std::packaged_task<void()>> (
                 std::bind(std::forward<F>(f), std::forward<Args>(args)...)
             );
@@ -43,7 +42,6 @@ class ThreadPool
             }
 
             queueCondition.notify_one();
-            std::cout << "Joined lambda function to queue, waiting for thread to run" << std::endl;
         }
 };
 

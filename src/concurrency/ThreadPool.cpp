@@ -8,11 +8,12 @@ ThreadPool::ThreadPool(int numThreads)
 {
     for (int i = 0; i < numThreads; ++i)
     {
-        std::cout << "Thread " << i << std::endl;
         threads.emplace_back([this]{
             while (true)
             {
                 std::function<void()> task;
+                
+                // Critical section (Tasks queue)
                 {
                     std::unique_lock<std::mutex> lock(queueMutex);
                     queueCondition.wait(lock, [this] {return (stopPool || !tasks.empty());}); // threads waits until first task appears
@@ -23,10 +24,12 @@ ThreadPool::ThreadPool(int numThreads)
                     task = tasks.front();
                     tasks.pop();
                 }
+                // End of critical section (Tasks queue)
                 task(); // runs task
             }
         });
     }
+    std::cout << "ThreadPool with " << numThreads << " threads initialised." << std::endl;
 }
 
 ThreadPool::~ThreadPool()

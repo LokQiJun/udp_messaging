@@ -20,10 +20,10 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
         if (filenameDataMap.find(udpheader.filename) == filenameDataMap.end()) {
             filenameDataMap[udpheader.filename] = std::map<int, std::vector<char>>();
         }
-        std::map<int, std::vector<char>> dataMap = filenameDataMap[udpheader.filename];
+        std::map<int, std::vector<char>>& dataMap = filenameDataMap[udpheader.filename];
         dataMap[udpheader.packetOrder] = buffer;
-        
-        if (dataMap.size() == udpheader.numPackets)
+    
+        if (dataMap.size() >= udpheader.numPackets)
         {
             completeMap = dataMap;
         }
@@ -35,6 +35,7 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
         // text message
         if (strcmp(udpheader.filetype.c_str(), "message") == 0)
         {
+            
             for (const auto& pair : completeMap)
             {
                 std::cout << "\nPacket " << pair.first << ": " << std::string(pair.second.begin(), pair.second.end()) << std::endl;
@@ -69,12 +70,12 @@ void MainReceiver::run()
     while (true)
     {
         std::vector<char> buffer(PACKET_SIZE); 
-        std::cout << "Waiting for Packets" << std::endl;
         server -> receivePackets(buffer); // busy waits for packets
-        std::cout << "Packets Received" << std::endl;
 
-        pool -> joinQueue([this, &buffer]() {
-            packetHandler(buffer);
-        });
+        pool -> joinQueue([this, buffer]() mutable 
+            {
+                packetHandler(buffer);
+            }
+        );
     }  
 }

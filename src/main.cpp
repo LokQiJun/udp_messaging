@@ -14,82 +14,76 @@
 int main(int argc, char *argv[])
 {
 
-    std::string socketAddress = "127.0.0.1";
-    int socketPort = 5006;
-    int senderPort = 5005;
-    int receiverPort = 5005;
+    auto senderInterface = []()
+    {
+        while (true)
+        {
+            std::string senderType;
+            std::cout << "\nSender Type (message/file) or `quit`: ";
+            std::getline(std::cin, senderType);
+            if (strcmp(senderType.c_str(), "quit") == 0)
+            {
+                break;
+            }
 
-    // Initialise server and client singleton classes
-    Server* server = Server::getInstance();
-    Client* client = Client::getInstance();
+            SenderFactory senderFactory;
+            Sender* sender = senderFactory.makeSender(senderType);
 
-    // auto senderInterface = []()
-    // {
-    //     while (true)
-    //     {
-    //         std::string senderType;
-    //         std::cout << "Sender Type (message/file) or `quit`: ";
-    //         std::cin >> senderType;
-    //         if (strcmp(senderType.c_str(), "quit"))
-    //         {
-    //             break;
-    //         }
-
-    //         SenderFactory senderFactory;
-    //         Sender* sender = senderFactory.makeSender(senderType);
-
-    //         if (sender)
-    //         {
-    //             std::thread senderThread([&sender, &senderType]() 
-    //             {
-    //                 std::cout << senderType << ": ";
+            if (sender)
+            {
+                std::thread senderThread([&sender, &senderType]() 
+                {
+                    std::cout << senderType << ": ";
                 
-    //                 std::string content;
-    //                 std::cin >> content;
-    //                 sender -> send(content);
-    //             });
+                    std::string content;
+                    std::getline(std::cin, content);
+                    std::cout << "In Interface: " << content << std::endl;  
+                    sender -> send(content);
+                });
 
-    //             senderThread.join();
-    //         }
-    //         else
-    //         {
-    //             std::cerr << "Invalid Sender Type" << std::endl;
-    //         }
-    //     }
-    // };
+                senderThread.join();
+            }
+            else
+            {
+                std::cerr << "Invalid Sender Type" << std::endl;
+            }
+        }
+    };
 
 
 
     auto receiverInterface = [](Server* server) {
         int numThreads = 10;
-        std::cout << "In receiver interface." << std::endl;
         MainReceiver mainReceiver(server, numThreads);
         mainReceiver.run();
     };
-    std::thread receiverThread(receiverInterface, server);
-    receiverThread.join();
+  
     
-    // if (argc < 2)
-    // {
-    //     appUsage();
-    //     return 0;
-    // }
+    if (argc < 2)
+    {
+        appUsage();
+        return 0;
+    }
 
-    // if (strcmp(argv[1], "-S") == 0)
-    // {
-    //     std::thread senderInterfaceThread(senderInterface);
-    //     std::thread clientSendThread([&client]()
-    //     {
-    //         client->send_handler();
-    //     });
-    //     senderInterfaceThread.join();
-    //     clientSendThread.join();
-    // }
-    // else if (strcmp(argv[1], "-R") == 0)
-    // {
-    //     std::thread(receiverInterface);
-    //     receiverInterface.join();
-    // }   
+    if (strcmp(argv[1], "-S") == 0)
+    {
+        // Initialise client singleton classes
+        Client* client = Client::getInstance();
+        std::thread senderInterfaceThread(senderInterface);
+        std::thread clientSendThread([&client]()
+        {
+            client->send_handler();
+        });
+        senderInterfaceThread.join();
+        clientSendThread.join();
+    }
+    else if (strcmp(argv[1], "-R") == 0)
+    {
+        // Initialise server singleton classes
+        Server* server = Server::getInstance();
+        std::thread receiverThread(receiverInterface, server);
+        receiverThread.join();
+    }   
 
     // if (argc < 2)
     // {

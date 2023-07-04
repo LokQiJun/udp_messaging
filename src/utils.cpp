@@ -31,7 +31,7 @@ std::string datetimeToFilename()
 }
 
 int ceilDiv(int numerator, int denominator)
-{
+{   
     return numerator/denominator + (numerator%denominator != 0);
 }
 

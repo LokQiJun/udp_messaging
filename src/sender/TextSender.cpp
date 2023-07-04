@@ -18,6 +18,7 @@ TextSender::~TextSender()
 void TextSender::send(std::string content)
 {
     // Format custom header for UDP packet
+    std::cout << content << std::endl;
     UDPHeader udpHeader = formatHeader("message.message", content.length());
     std::vector<char> buffer(PACKET_SIZE);
     
@@ -44,7 +45,7 @@ void TextSender::send(std::string content)
         
         // Update variables for next iteration
         offset += payloadSize;
-        std::cout << "Progress: " << (static_cast<float>(offset + payloadSize)/content.size())*100 << "%" << std::endl;
+        std::cout << "Progress: " << (static_cast<float>(offset)/content.size())*100 << "%" << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     

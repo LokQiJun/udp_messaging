@@ -60,7 +60,7 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
             }
 
             outputfile.close();
-            std::cout << "File received and stored as " << filepath << std::endl;
+            std::cout << "File received with " << completeMap.size() << " packets and stored as " << filepath << std::endl;
         }
     }
     return;

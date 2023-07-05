@@ -54,16 +54,19 @@ void FileSender::send(std::string content)
         std::size_t payloadSize = std::min(PACKET_SIZE-headerSize, filesize-read);
 
         // Client sends buffer
-        std::cout << packetCount << ", ";
+        if (packetCount%100==0)
+        {
+            std::cout << packetCount << ", ";
+        }
         file.read(buffer.data() + headerSize, payloadSize);
         client -> send_handler(buffer);
         
         // Update variables for next iteration
         read += payloadSize;
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 
-    std::cout << filepath << " sent." << std::endl;
+    std::cout << filepath << " sent with " << packetCount << " packets." << std::endl;
     return;
 
 }

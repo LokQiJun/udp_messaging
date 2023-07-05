@@ -51,7 +51,7 @@ void FileSender::send(std::string content)
         int headerSize = attachHeader(udpHeader, buffer);
 
         // Calculate payload size
-        std::size_t payloadSize = std::min(PACKET_SIZE-headerSize, filesize-read);
+        std::size_t payloadSize = std::min(PACKET_SIZE-headerSize, filesize-read); // payload size corresponds to amount of space left in a packet or the amount of data left in a file
 
         // Client sends buffer
         if (packetCount%100==0)
@@ -59,11 +59,11 @@ void FileSender::send(std::string content)
             std::cout << packetCount << ", ";
         }
         file.read(buffer.data() + headerSize, payloadSize);
-        client -> send_handler(buffer);
+        client -> sendHandler(buffer);
         
         // Update variables for next iteration
         read += payloadSize;
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
     std::cout << filepath << " sent with " << packetCount << " packets." << std::endl;

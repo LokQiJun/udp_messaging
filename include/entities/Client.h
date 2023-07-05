@@ -33,8 +33,8 @@ class Client : public Entity
         bool queuePriority(std::vector<char>& buffer);
         bool queueNormal(std::vector<char>& buffer);
 
-        void send_handler(std::vector<char> data);
-        void send_handler();
+        void sendHandler(std::vector<char> data);
+        void sendHandler();
         
 };
 

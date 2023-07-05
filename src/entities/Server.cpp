@@ -45,6 +45,7 @@ Server* Server::getInstance()
     return serverInstance;
 }
 
+
 int Server::receivePackets(std::vector<char>& buffer)
 {   
     
@@ -61,11 +62,11 @@ int Server::receivePackets(std::vector<char>& buffer)
 
 
     // remove trailing null chars
-    while (!buffer.empty() && buffer.back() == '\x00')
-    {
-        buffer.pop_back();
-        bytesReceived--;
-    }  
+    // while (!buffer.empty() && buffer.back() == '\x00')
+    // {
+    //     buffer.pop_back();
+    //     bytesReceived--;
+    // }  
     return bytesReceived;
 }
 

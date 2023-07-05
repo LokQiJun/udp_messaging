@@ -56,7 +56,7 @@ void VidStreamUpload::upload(std::string filepath)
         cv::imencode(".jpg", frame, frameBuffer, compressionParams);
         videoBuffer.insert(videoBuffer.end(), frameBuffer.begin(), frameBuffer.end());
 
-        client -> send_handler(videoBuffer);
+        client -> sendHandler(videoBuffer);
         std::cout << "Frame " << frameCount << ": " << videoBuffer.size() << " bytes" << std::endl;
 
         frame.release();

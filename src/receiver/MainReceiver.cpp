@@ -26,6 +26,7 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
         if (dataMap.size() >= udpheader.numPackets)
         {
             completeMap = dataMap;
+            filenameDataMap.erase(udpheader.filename); 
         }
         // Release mutex
     }
@@ -35,7 +36,6 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
         // text message
         if (strcmp(udpheader.filetype.c_str(), "message") == 0)
         {
-            
             for (const auto& pair : completeMap)
             {
                 std::cout << "\nPacket " << pair.first << ": " << std::string(pair.second.begin(), pair.second.end()) << std::endl;

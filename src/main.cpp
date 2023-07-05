@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
                 
                     std::string content;
                     std::getline(std::cin, content);
-                    std::cout << "In Interface: " << content << std::endl;  
                     sender -> send(content);
                 });
 
@@ -72,7 +71,7 @@ int main(int argc, char *argv[])
         std::thread senderInterfaceThread(senderInterface);
         std::thread clientSendThread([&client]()
         {
-            client->send_handler();
+            client->sendHandler();
         });
         senderInterfaceThread.join();
         clientSendThread.join();

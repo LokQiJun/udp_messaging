@@ -41,7 +41,7 @@ void TextSender::send(std::string content)
 
         // Client sends buffer
         std::copy(content.begin() + offset, content.begin() + offset + payloadSize, buffer.begin() + headerSize + 1);
-        client -> send_handler(buffer);
+        client -> sendHandler(buffer);
         
         // Update variables for next iteration
         offset += payloadSize;

@@ -10,6 +10,7 @@ struct UDPHeader
     std::string filetype;
     int numPackets;
     int packetOrder;
+    int frameOrder; // Only for video streams
 };
 
 

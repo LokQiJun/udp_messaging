@@ -19,6 +19,7 @@ std::string datetimeToFilename();
 int ceilDiv(int numerator, int denominator);
 
 std::string substrRightOf(std::string str, std::string pattern);
+std::string substrLeftOf(std::string str, std::string pattern);
 
 void appUsage();
 

@@ -29,7 +29,7 @@ UDPHeader formatHeader(std::string filepath, int filesize)
     std::size_t headerSize = sizeof(size_t) * 2 + 
         filename.length() +
         filetype.length() +
-        sizeof(int) * 2;
+        sizeof(int) * 3;
     std::size_t payloadSize = PACKET_SIZE - headerSize;
     
     // Format header
@@ -38,6 +38,7 @@ UDPHeader formatHeader(std::string filepath, int filesize)
     udpHeader.filetype = filetype;
     udpHeader.numPackets = ceilDiv(filesize, payloadSize);
     udpHeader.packetOrder = 0;
+    udpHeader.frameOrder = 0;
 
     return udpHeader;
 }

@@ -18,6 +18,7 @@ class MainReceiver
         Server* server;
         ThreadPool* pool;
         std::map<std::string, std::map<int, std::vector<char>>> filenameDataMap;
+        std::map<std::string, int> streamFrameOrderMap;
         std::mutex mapMutex;
     public:
         MainReceiver(Server* server, int numThreads)

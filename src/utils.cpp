@@ -49,6 +49,18 @@ std::string substrRightOf(std::string str, std::string pattern)
     return str;
 }
 
+std::string substrLeftOf(std::string str, std::string pattern)
+{
+    std::size_t found = str.find(pattern);
+
+    if (found != std::string::npos)
+    {
+        str = str.substr(0, found);
+    }
+
+    return str;
+}
+
 void appUsage()
 {
     std::cout << "Usage:" << std::endl;

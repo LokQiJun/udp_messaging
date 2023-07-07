@@ -11,9 +11,7 @@
 class Client : public Entity 
 {
     private:
-
         static Client* clientInstance;
-        
         Client();
         ~Client();
 
@@ -23,7 +21,6 @@ class Client : public Entity
  
  
     public:
-        // Client(std::string socketAddress, int socketPort);
         static Client* getInstance();  
 
         // Setter
@@ -35,7 +32,6 @@ class Client : public Entity
 
         void sendHandler(std::vector<char> data);
         void sendHandler();
-        
 };
 
 #endif

@@ -69,6 +69,10 @@ int attachHeader(const UDPHeader& udpHeader, std::vector<char>& buffer)
     // Serialise packetOrder
     memcpy(&buffer[pos], &udpHeader.packetOrder, int_size);
     pos += int_size;
+
+    // Serialise frameOrder
+    memcpy(&buffer[pos], &udpHeader.frameOrder, int_size);
+    pos += int_size;
     
     return pos;
 }
@@ -99,6 +103,10 @@ UDPHeader removeHeader(std::vector<char>& buffer)
 
     // Extract packet order
     memcpy(&udpHeader.packetOrder, buffer.data(), int_size);
+    buffer.erase(buffer.begin(), buffer.begin()+int_size);
+
+    // Extract frame order
+    memcpy(&udpHeader.frameOrder, buffer.data(), int_size);
     buffer.erase(buffer.begin(), buffer.begin()+int_size);
 
     return udpHeader;

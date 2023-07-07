@@ -7,7 +7,7 @@
 #include "receiver/FileReceiver.h"
 #include "receiver/MainReceiver.h"
 #include "concurrency/ThreadPool.h"
-#include "streamDownload/VidStreamDownload.h"
+#include "streaming/VideoPlayer.h"
 #include "streamUpload/VidStreamUpload.h"
 #include "sender/SenderFactory.h"
 
@@ -82,7 +82,32 @@ int main(int argc, char *argv[])
         Server* server = Server::getInstance();
         std::thread receiverThread(receiverInterface, server);
         receiverThread.join();
-    }   
+    }
+    else if (strcmp(argv[1], "-U") == 0)
+    {
+        Client* client = Client::getInstance();
+        VidStreamUpload vidStreamUpload(client);
+
+        std::string filepath = "";  
+        while (true)
+        {
+            std::cout << "Enter filepath ('q' to quit): ";
+            std::getline(std::cin, filepath);
+            
+            if (filepath == "q") break;
+            else vidStreamUpload.upload(filepath);
+        }   
+    }
+    else if (strcmp(argv[1], "-D") == 0)
+    {
+        Server* server = Server::getInstance();
+        std::thread receiverThread(receiverInterface, server);
+       
+       
+        VideoPlayer* videoPlayer = VideoPlayer::getInstance();
+        videoPlayer -> playback();
+        receiverThread.join(); // Receive frames  
+    }
 
     // if (argc < 2)
     // {
@@ -166,9 +191,9 @@ int main(int argc, char *argv[])
     // else if (strcmp(argv[1], "-D") == 0)
     // {
     //     // Server* streamServer = new Server(socketAddress, socketPort);
-    //     // VidStreamDownload vidStreamDownload(streamServer);
-    //     VidStreamDownload vidStreamDownload(server);
-    //     vidStreamDownload.download();
+    //     // VideoPlayer VideoPlayer(streamServer);
+    //     VideoPlayer VideoPlayer(server);
+    //     VideoPlayer.download();
     // }
     // else 
     // {

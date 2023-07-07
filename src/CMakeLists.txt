@@ -11,7 +11,7 @@ add_library(src
     sender/FileSender.cpp
     sender/TextSender.cpp
     sender/SenderFactory.cpp
-    streamDownload/VidStreamDownload.cpp
+    streaming/VideoPlayer.cpp
     streamUpload/VidStreamUpload.cpp
     UDPPacket/UDPPacket.cpp
     utils.cpp

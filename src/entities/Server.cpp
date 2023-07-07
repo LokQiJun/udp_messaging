@@ -16,13 +16,6 @@ Server::Server()
     std::cout << "Server started at " << "127.0.0.1" << ":" << SERVER_PORT << std::endl;
 }
 
-// Server::Server(std::string socketAddress, int socketPort) 
-//     : Entity(socketAddress, socketPort)
-// {
-//     initUDPSocket();
-//     std::cout << "Server started at " << socketAddress << ":" << socketPort << std::endl;
-// }
-
 // Destructor
 Server::~Server()
 {

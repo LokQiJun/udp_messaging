@@ -18,15 +18,17 @@ VidStreamUpload::~VidStreamUpload()
 {
 }
 
+
+
 void VidStreamUpload::upload(std::string filepath)
 {
     std::string filetype = extractFiletype(filepath);
     std::string filename = stripBreadcrumb(filepath);
     
     // Check filetype 
-    if (filetype.compare(".mp4") != 0)
+    if (filetype.compare("mp4") != 0)
     {
-        std::cerr << "Input file needs to be an mp4 file" << std::endl;
+        std::cerr << "Input file needs to be an mp4 file. Current file type: " << filetype << std::endl;
         return;
     }
 
@@ -48,7 +50,6 @@ void VidStreamUpload::upload(std::string filepath)
     int frameCount = 0;
     int frameWidth = 480;
     int frameHeight = 360;
-    cv::Size newSize(360, 270);
     
     while(video.read(frame))
     {   
@@ -86,17 +87,14 @@ void VidStreamUpload::upload(std::string filepath)
             udpHeader.packetOrder = packetCount;
             udpHeader.frameOrder = frameCount;
             int headerSize = attachHeader(udpHeader, packetBuffer);
-
+    
             // Calculate payload size
             std::size_t payloadSize = std::min(PACKET_SIZE-headerSize, frameSize-read); // payload size corresponds to amount of space left in a packet or the amount of data left in a file
 
             // Client sends packetBuffer
-            if (packetCount%100==0)
-            {
-                std::cout << packetCount << ", ";
-            }
-            packetBuffer.insert(packetBuffer.end()+headerSize, frameBuffer.begin()+read, frameBuffer.begin()+read+payloadSize);
+            packetBuffer.insert(packetBuffer.begin()+headerSize, frameBuffer.begin()+read, frameBuffer.begin()+read+payloadSize);
             client -> sendHandler(packetBuffer);
+            
             
             // Update variables for next iteration
             read += payloadSize;
@@ -104,9 +102,9 @@ void VidStreamUpload::upload(std::string filepath)
         }
         
         std::cout << "Frame " << frameCount << ": " << frameBuffer.size() << " bytes" << std::endl;
-
+  
         frame.release();
-        frameBuffer.clear();       
+        frameBuffer.clear();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
         

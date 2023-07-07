@@ -64,10 +64,8 @@ std::string substrLeftOf(std::string str, std::string pattern)
 void appUsage()
 {
     std::cout << "Usage:" << std::endl;
-    std::cout << "-TS : Text Send mode" << std::endl;
-    std::cout << "-TR : Text Receive mode" << std::endl;
-    std::cout << "-FS : File Send mode" << std::endl;
-    std::cout << "-FR : File Receive mode" << std::endl;
-    std::cout << "-U : Stream upload mode " << std::endl;
-    std::cout << "-D : Stream download mode " << std::endl;
+    std::cout << "-S :  Send mode" << std::endl;
+    std::cout << "-R : Receive mode" << std::endl;
+    std::cout << "-U : Video streamming upload mode " << std::endl;
+    std::cout << "-D : Video streaming download mode " << std::endl;
 }

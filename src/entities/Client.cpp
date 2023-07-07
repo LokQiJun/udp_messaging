@@ -69,18 +69,11 @@ void Client::sendHandler(std::vector<char> data_buf)
 {   
     Entity::openUDPSocket();
     boost::system::error_code err;
-
-    // std::cout << data_buf.data() << std::endl;
-    
-    // if (PACKET_SIZE > data_buf.size())
-    // {
-    //     data_buf.resize(PACKET_SIZE, '\x00');
-    // }
     
     socket.send_to(boost::asio::buffer(data_buf), Entity::endpoint, 0, err );
     if (err) 
     {
-        std::cout << "Failed to send: " << err.message() << std::endl;
+        std::cerr << "Failed to send: " << err.message() << std::endl;
     }
     Entity::closeSocket();
     return;
@@ -130,7 +123,7 @@ void Client::sendHandler()
             socket.send_to(boost::asio::buffer((*buffer_ptr)), endpoint, 0, err);
             if (err) 
             {
-                std::cout << "Failed to send: " << err.message() << std::endl;
+                std::cerr << "Failed to send: " << err.message() << std::endl;
             }   
         }
     }

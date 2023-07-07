@@ -1,5 +1,5 @@
 #include "receiver/MainReceiver.h"
-
+#include "streaming/VideoPlayer.h"
 #include "concurrency/ThreadPool.h"
 #include "UDPPacket/UDPPacket.h"
 #include "utils.h"
@@ -14,11 +14,11 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
 {
     //Extract data
     UDPHeader udpheader = removeHeader(buffer);
-    std::map<int, std::vector<char>> completeMap;
+    std::map<int, std::vector<char>> completeMap; // only for files
 
     // Handle Stream
     if (strcmp(udpheader.filetype.c_str(), "stream") == 0)
-    {
+    {       
         // Initalise maps for new stream 
         std::lock_guard<std::mutex> lock(mapMutex); // Obtain mutex
         if (filenameDataMap.find(udpheader.filename) == filenameDataMap.end()) {
@@ -29,30 +29,42 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
         }
 
         // Check frame order 
-        if (streamFrameOrderMap[udpheader.filename] == udpheader.frameOrder) // packet corresponds to current frame
+        // incoming frame has same frame order as current frame, packet corresponds to current frame
+        if (streamFrameOrderMap[udpheader.filename] == udpheader.frameOrder) 
         {
             // append new data to map
             filenameDataMap[udpheader.filename][udpheader.packetOrder] = buffer;
         }
-        else if (streamFrameOrderMap[udpheader.filename] < udpheader.frameOrder) // remaining packets of current frames lost
+        // incoming frame is of large frame order than current frame, remaining packets of current frames lost
+        else if (streamFrameOrderMap[udpheader.filename] < udpheader.frameOrder || streamFrameOrderMap[udpheader.filename] == 1 ) 
         {
-            // clear packets of current frame and append new data to map
+            // clear packets of current frame and append packet of new frame to map
             filenameDataMap[udpheader.filename] = std::map<int, std::vector<char>>(); 
             filenameDataMap[udpheader.filename][udpheader.packetOrder] = buffer;
             
             // update frame order for current stream
             streamFrameOrderMap[udpheader.filename] = udpheader.frameOrder;
         }
+        // incoming frame is of smaller frame order than current frame, packet arrived late and is not needed anymore
         else
         {
-            // drop packet if it belongs to an older frame
+            // drop packet by not processing
+            return;
         }
 
         // Create a thread safe copy of the map with all relevant data        
         if (filenameDataMap[udpheader.filename].size() >= udpheader.numPackets)
         {
-            completeMap = filenameDataMap[udpheader.filename];
-            filenameDataMap.erase(udpheader.filename); 
+            std::vector<char> frameBuffer;
+            for (auto& pair : filenameDataMap[udpheader.filename])
+            {
+                frameBuffer.insert(frameBuffer.end(), pair.second.begin(), pair.second.end());
+            }
+            cv::Mat frame = cv::imdecode(frameBuffer, cv::IMREAD_COLOR);
+            VideoPlayer* videoPlayerInstance = VideoPlayer::getInstance();
+            videoPlayerInstance -> newFrame(udpheader.filename, frame);
+            
+            
         }
         // Release mutex
     }
@@ -61,7 +73,8 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
     else 
     {
         std::lock_guard<std::mutex> lock(mapMutex); // Obtain mutex
-        if (filenameDataMap.find(udpheader.filename) == filenameDataMap.end()) {
+        if (filenameDataMap.find(udpheader.filename) == filenameDataMap.end()) 
+        {
             filenameDataMap[udpheader.filename] = std::map<int, std::vector<char>>();
         }
         filenameDataMap[udpheader.filename][udpheader.packetOrder] = buffer;
@@ -86,17 +99,6 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
             }
             std::cout << "Message Received." << std::endl;
         }
-        // // stream
-        // else if (strcmp(udpheader.filetype.c_str(), "stream") == 0)
-        // {
-        //     std::vector<char> frameBuffer;
-        //     for (const auto& pair : completeMap)
-        //     {
-        //         const std::vector<char>& packetBuffer = pair.second;
-        //         frameBuffer.insert(frameBuffer.end(), packetBuffer.begin(), packetBuffer.end());
-        //     }
-        // }
-        }
         // files
         else 
         {
@@ -118,8 +120,8 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
             std::cout << "File received with " << completeMap.size() << " packets and stored as " << filepath << std::endl;
         }
     }
-    return;
 }
+
 void MainReceiver::run()
 {
     while (true)
@@ -127,7 +129,8 @@ void MainReceiver::run()
         std::vector<char> buffer(PACKET_SIZE); 
         server -> receivePackets(buffer); // busy waits for packets
 
-        pool -> joinQueue([this, buffer]() mutable 
+        pool -> joinQueue(
+            [this, buffer]() mutable 
             {
                 packetHandler(buffer);
             }

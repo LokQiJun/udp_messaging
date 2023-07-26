@@ -15,7 +15,7 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
     //Extract data
     UDPHeader udpheader = removeHeader(buffer);
     std::map<int, std::vector<char>> completeMap; // only for files
-
+   
     // Handle Stream
     if (strcmp(udpheader.filetype.c_str(), "stream") == 0)
     {       
@@ -124,10 +124,16 @@ void MainReceiver::packetHandler(std::vector<char>& buffer)
 
 void MainReceiver::run()
 {
+    int count = 0;
     while (true)
     {
         std::vector<char> buffer(PACKET_SIZE); 
         server -> receivePackets(buffer); // busy waits for packets
+        count++;
+        if (count % 100 == 0)
+        {
+            std::cout << count << ", ";
+        }
 
         pool -> joinQueue(
             [this, buffer]() mutable 

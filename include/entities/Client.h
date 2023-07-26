@@ -27,10 +27,12 @@ class Client : public Entity
         static void setQueueCapcity(int x);
 
         // Functions 
+        void sendHandler(std::vector<char> data);
+
+        // TODO: Implement new sending logic 
         bool queuePriority(std::vector<char>& buffer);
         bool queueNormal(std::vector<char>& buffer);
 
-        void sendHandler(std::vector<char> data);
         void sendHandler();
 };
 

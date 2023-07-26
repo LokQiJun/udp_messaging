@@ -14,7 +14,6 @@ struct UDPHeader
 };
 
 
-
 std::string stripBreadcrumb(std::string filepath);
 std::string extractFiletype(std::string filename);
 

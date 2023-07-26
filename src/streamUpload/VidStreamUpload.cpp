@@ -92,7 +92,10 @@ void VidStreamUpload::upload(std::string filepath)
             std::size_t payloadSize = std::min(PACKET_SIZE-headerSize, frameSize-read); // payload size corresponds to amount of space left in a packet or the amount of data left in a file
 
             // Client sends packetBuffer
+            std::cout << frameCount << "," << packetCount << ":" << packetBuffer.size() << std::endl;
             packetBuffer.insert(packetBuffer.begin()+headerSize, frameBuffer.begin()+read, frameBuffer.begin()+read+payloadSize);
+            packetBuffer.resize(PACKET_SIZE);
+            std::cout << frameCount << "," << packetCount << ":" << packetBuffer.size() << "(" << headerSize << ")" << std::endl;
             client -> sendHandler(packetBuffer);
             
             
@@ -106,7 +109,7 @@ void VidStreamUpload::upload(std::string filepath)
         frame.release();
         frameBuffer.clear();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
         
     }
 

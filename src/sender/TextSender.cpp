@@ -18,7 +18,6 @@ TextSender::~TextSender()
 void TextSender::send(std::string content)
 {
     // Format custom header for UDP packet
-    std::cout << content << std::endl;
     UDPHeader udpHeader = formatHeader("message.message", content.length());
     std::vector<char> buffer(PACKET_SIZE);
     

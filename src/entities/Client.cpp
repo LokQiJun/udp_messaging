@@ -38,6 +38,23 @@ void Client::setQueueCapcity(int x)
     queueCapacity = x;
 }
 
+
+
+
+void Client::sendHandler(std::vector<char> data_buf)
+{   
+    Entity::openUDPSocket();
+    boost::system::error_code err;
+    socket.send_to(boost::asio::buffer(data_buf), Entity::endpoint, 0, err );
+    if (err) 
+    {
+        std::cerr << "Failed to send: " << err.message() << std::endl;
+    }
+    Entity::closeSocket();
+    return;
+}
+
+// Enqueue Priority packets (TODO: implement with new sendHandler)
 bool Client::queuePriority(std::vector<char>& buffer)
 {
     if (priorityQueue.size() < queueCapacity)
@@ -51,6 +68,7 @@ bool Client::queuePriority(std::vector<char>& buffer)
     }
 }
 
+// Enqueue Normal packets (TODO: implement with new sendHandler)
 bool Client::queueNormal(std::vector<char>& buffer)
 {
     if (normalQueue.size() < queueCapacity)
@@ -64,21 +82,7 @@ bool Client::queueNormal(std::vector<char>& buffer)
     }
 }
 
-// Send data packet (TODO: control rate of flow)
-void Client::sendHandler(std::vector<char> data_buf)
-{   
-    Entity::openUDPSocket();
-    boost::system::error_code err;
-    
-    socket.send_to(boost::asio::buffer(data_buf), Entity::endpoint, 0, err );
-    if (err) 
-    {
-        std::cerr << "Failed to send: " << err.message() << std::endl;
-    }
-    Entity::closeSocket();
-    return;
-}
-
+// TODO: Replace sendHandler with this version
 void Client::sendHandler()
 {
     openUDPSocket(); 

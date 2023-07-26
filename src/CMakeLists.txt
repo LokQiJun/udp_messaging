@@ -5,8 +5,6 @@ add_library(src
     entities/Client.cpp
     entities/Entity.cpp
     entities/Server.cpp
-    receiver/TextReceiver.cpp
-    receiver/FileReceiver.cpp
     receiver/MainReceiver.cpp
     sender/FileSender.cpp
     sender/TextSender.cpp

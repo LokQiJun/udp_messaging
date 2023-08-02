@@ -5,6 +5,7 @@
 
 #include <string>
 
+// Factory design pattern implementation for all Sender classes
 class SenderFactory 
 {
     public:

@@ -6,8 +6,7 @@
 #include <queue>
 #include <vector>
 
-// UDP Client Class
-
+// UDP Client that sends UDP packets
 class Client : public Entity 
 {
     private:

@@ -10,6 +10,7 @@
 #include <functional>
 #include <condition_variable>
 
+// Manages a pool of worker threads that can be used to execute tasks concurrently
 class ThreadPool
 {
     private:

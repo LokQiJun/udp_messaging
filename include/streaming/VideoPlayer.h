@@ -4,6 +4,7 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 
+// Handles playback of video streams
 class VideoPlayer
 {
     private:

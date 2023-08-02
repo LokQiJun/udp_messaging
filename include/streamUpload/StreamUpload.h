@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+// Parent class for all stream uploading classes
 class StreamUpload
 {
     protected:

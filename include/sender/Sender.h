@@ -5,6 +5,7 @@
 
 #include <string>
 
+// Parent class for all Sender classes
 class Sender 
 {
     protected:

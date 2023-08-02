@@ -12,6 +12,7 @@
 #include <iostream>
 #include <boost/array.hpp>
 
+// Handles UDP packets received by Server class
 class MainReceiver
 {
     protected:

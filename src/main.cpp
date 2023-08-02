@@ -9,6 +9,9 @@
 #include "streamUpload/VidStreamUpload.h"
 #include "sender/SenderFactory.h"
 
+#define CLIENT_PORT 5000
+#define SERVER_PORT 5005
+
 int main(int argc, char *argv[])
 {
 

@@ -7,7 +7,7 @@
 
 #include <vector>
 
-// UDP Server Class
+// UDP Server that receives UDP Packets
 class Server : public Entity 
 {
     private: 
@@ -19,12 +19,9 @@ class Server : public Entity
         void initUDPSocket();
 
     public:
-        // Server(std::string socketAddress, int socketPort);
         static Server* getInstance();
         
         int receivePackets(std::vector<char>& buffer);
-        // int receivePackets(boost::array<char, PACKET_SIZE>& buffer); // Text Message and Files
-        // int receivePackets(boost::array<char, STREAM_SIZE>& buffer); // Video Stream
 };
 
 #endif

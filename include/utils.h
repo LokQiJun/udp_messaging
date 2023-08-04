@@ -5,18 +5,21 @@
 #include <iomanip> 
 #include <sstream>
 
+// Application constants
 #define PACKET_SIZE 1472
-#define STREAM_SIZE 20000
-#define STREAM_FRAME_RATE 10
 
-extern const char* flushBuffer;
-
+// Utility datetime funcitons
 std::time_t getCurrDatetime();
 std::string getCurrDatetimeStr();
 std::string datetimeToFilename();
 
+// Helper functions
 int ceilDiv(int numerator, int denominator);
 
+std::string substrRightOf(std::string str, std::string pattern);
+std::string substrLeftOf(std::string str, std::string pattern);
+
+// Application usage instructions
 void appUsage();
 
 #endif

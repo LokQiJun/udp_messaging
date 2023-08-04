@@ -3,21 +3,25 @@
 
 #include "Entity.h"
 #include "utils.h"
+#include "../concurrency/ThreadPool.h"
 
 #include <vector>
 
-// UDP Server Class
-class Server : public Entity {
+// UDP Server that receives UDP Packets
+class Server : public Entity 
+{
     private: 
-        void initUDPSocket();     
+        static Server* serverInstance;     
+        
+        Server();
+        ~Server();
+        
+        void initUDPSocket();
 
     public:
-        Server(std::string socketAddress, int socketPort);
-        ~Server();
-
-        int receive_handler(std::vector<char>& buffer);
-        int receive_handler(boost::array<char, PACKET_SIZE>& buffer); // Text Message and Files
-        int receive_handler(boost::array<char, STREAM_SIZE>& buffer); // Video Stream
+        static Server* getInstance();
+        
+        int receivePackets(std::vector<char>& buffer);
 };
 
 #endif

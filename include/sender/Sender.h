@@ -5,6 +5,7 @@
 
 #include <string>
 
+// Parent class for all Sender classes
 class Sender 
 {
     protected:
@@ -14,6 +15,7 @@ class Sender
         virtual ~Sender() {}
 
         virtual void send(std::string content) = 0;
+        
 };
 
 #endif

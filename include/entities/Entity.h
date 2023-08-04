@@ -4,7 +4,7 @@
 #include <string>
 #include <boost/asio.hpp>
 
-// Base class for Server and Client
+// Parent class for Server and Client classes
 class Entity 
 {
     protected:

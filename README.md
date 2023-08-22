@@ -12,6 +12,7 @@ Link Boost and OpenCV root and libraries manually if they are downloaded in a no
 $ git clone https://github.com/changdaozheng/udp_messaging.git
 $ cd udp_messaging
 $ mkdir build
+$ cmake -S . -B ./build 
 $ cmake --build build
 $ build/server_client
 ```

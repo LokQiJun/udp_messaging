@@ -4,6 +4,9 @@
 #include <string>
 #include <boost/asio.hpp>
 
+#define CLIENT_PORT 5000
+#define SERVER_PORT 5005
+
 // Parent class for Server and Client classes
 class Entity 
 {
